@@ -5,17 +5,43 @@ import com.trainguy9512.locomotion.access.MatrixModelPart;
 import net.minecraft.client.model.geom.ModelPart;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 @Mixin(ModelPart.class)
 public class MixinModelPart implements MatrixModelPart {
 
+    @Shadow
+    @Final
+    private Map<String, ModelPart> children;
+
     @Unique
     Matrix4f locomotion$matrix4f = null;
+
+    @Unique
+    @Override
+    public Function<String, ModelPart> locomotion$createPartLookup() {
+        Map<String, ModelPart> lookup = new HashMap<>();
+        lookup.put("root", (ModelPart) (Object) this);
+        locomotion$collectChildren((ModelPart) (Object) this, lookup);
+        return lookup::get;
+    }
+
+    @Unique
+    private static void locomotion$collectChildren(ModelPart part, Map<String, ModelPart> lookup) {
+        Map<String, ModelPart> partChildren = ((MixinModelPart) (Object) part).children;
+        partChildren.forEach(lookup::putIfAbsent);
+        partChildren.values().forEach(child -> locomotion$collectChildren(child, lookup));
+    }
 
     @Unique
     @Override

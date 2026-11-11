@@ -22,7 +22,7 @@ public class ModelPartSpacePose extends Pose {
 
         JointSkeleton jointSkeleton = this.getJointSkeleton();
 
-        Function<String, ModelPart> partLookup = model.root().createPartLookup();
+        Function<String, ModelPart> partLookup = ((MatrixModelPart) (Object) model.root()).locomotion$createPartLookup();
         jointSkeleton.getJoints().forEach(joint -> {
             String modelPartIdentifier = jointSkeleton.getJointConfiguration(joint).modelPartIdentifier();
             if (modelPartIdentifier != null) {
