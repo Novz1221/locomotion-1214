@@ -241,7 +241,9 @@ public class LocomotionConfigScreen {
                         .text(Component.translatable("locomotion.config.group.individual_block_entity_toggles.description"))
                         .build());
 
+        boolean hasBlockEntityToggles = false;
         for (BlockEntityType<?> blockEntityType : JointAnimatorRegistry.getRegisteredBlockEntities()) {
+            hasBlockEntityToggles = true;
             ResourceLocation blockEntityTypeIdentifier = BlockEntityType.getKey(blockEntityType);
             assert blockEntityTypeIdentifier != null;
             blockTogglesBuilder.option(Option.<Boolean>createBuilder()
@@ -255,7 +257,9 @@ public class LocomotionConfigScreen {
                     .build());
         }
 
-        categoryBuilder.group(blockTogglesBuilder.build());
+        if (hasBlockEntityToggles) {
+            categoryBuilder.group(blockTogglesBuilder.build());
+        }
         return categoryBuilder.build();
     }
 }
