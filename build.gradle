@@ -23,7 +23,6 @@ repositories {
 }
 
 loom {
-    silentMojangMappingsLicense()
 }
 
 dependencies {
