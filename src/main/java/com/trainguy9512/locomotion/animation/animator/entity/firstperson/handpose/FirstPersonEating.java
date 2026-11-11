@@ -14,7 +14,7 @@ import com.trainguy9512.locomotion.animation.util.Easing;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 
 import java.util.Set;
 
@@ -81,6 +81,6 @@ public class FirstPersonEating {
         if (!context.getDriverValue(FirstPersonDrivers.getUsingItemDriver(hand))) {
             return false;
         }
-        return context.getDriverValue(FirstPersonDrivers.getRenderedItemDriver(hand)).getUseAnimation() == UseAnim.EAT;
+        return context.getDriverValue(FirstPersonDrivers.getRenderedItemDriver(hand)).getUseAnimation() == ItemUseAnimation.EAT;
     }
 }

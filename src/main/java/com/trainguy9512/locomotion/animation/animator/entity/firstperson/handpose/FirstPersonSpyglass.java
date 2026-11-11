@@ -18,7 +18,7 @@ import com.trainguy9512.locomotion.animation.util.Easing;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import org.joml.Vector3f;
 
 public class FirstPersonSpyglass {
@@ -83,8 +83,8 @@ public class FirstPersonSpyglass {
     private static Vector3f getHiddenScale(PoseCalculationContext context) {
         for (InteractionHand hand : InteractionHand.values()) {
             if (context.getDriverValue(FirstPersonDrivers.getUsingItemDriver(hand))) {
-                UseAnim itemUseAnimation = context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation();
-                if (itemUseAnimation == UseAnim.SPYGLASS) {
+                ItemUseAnimation itemUseAnimation = context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation();
+                if (itemUseAnimation == ItemUseAnimation.SPYGLASS) {
                     return new Vector3f(0);
                 }
             }

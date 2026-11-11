@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ShieldItem;
 
 import java.util.*;
@@ -129,7 +129,7 @@ public class FirstPersonHandPoses {
             "bow",
             HandPoseFunctionSupplier::constructOnlyWithMiningAnimation,
             FirstPersonAnimationSequences.HAND_BOW_POSE,
-            itemStack -> itemStack.getUseAnimation() == UseAnim.BOW,
+            itemStack -> itemStack.getUseAnimation() == ItemUseAnimation.BOW,
             100)
             .setRaiseSequence(FirstPersonAnimationSequences.HAND_TOOL_RAISE)
             .setLowerSequence(FirstPersonAnimationSequences.HAND_TOOL_LOWER)
@@ -138,7 +138,7 @@ public class FirstPersonHandPoses {
             "crossbow",
             HandPoseFunctionSupplier::constructOnlyWithMiningAnimation,
             FirstPersonAnimationSequences.HAND_CROSSBOW_POSE,
-            itemStack -> itemStack.getUseAnimation() == UseAnim.CROSSBOW,
+            itemStack -> itemStack.getUseAnimation() == ItemUseAnimation.CROSSBOW,
             100)
             .setRaiseSequence(FirstPersonAnimationSequences.HAND_CROSSBOW_RAISE)
             .setLowerSequence(FirstPersonAnimationSequences.HAND_TOOL_LOWER)
@@ -156,7 +156,7 @@ public class FirstPersonHandPoses {
             "brush",
             FirstPersonBrush::constructBrushPoseFunction,
             FirstPersonAnimationSequences.HAND_BRUSH_POSE,
-            itemStack -> itemStack.getUseAnimation() == UseAnim.BRUSH,
+            itemStack -> itemStack.getUseAnimation() == ItemUseAnimation.BRUSH,
             100)
             .setRaiseSequence(FirstPersonAnimationSequences.HAND_TOOL_RAISE)
             .setLowerSequence(FirstPersonAnimationSequences.HAND_TOOL_LOWER)
@@ -174,7 +174,7 @@ public class FirstPersonHandPoses {
             "spyglass",
             FirstPersonSpyglass::handSpyglassPoseFunction,
             FirstPersonAnimationSequences.HAND_SPYGLASS_POSE,
-            itemStack -> itemStack.getUseAnimation() == UseAnim.SPYGLASS,
+            itemStack -> itemStack.getUseAnimation() == ItemUseAnimation.SPYGLASS,
             100)
             .setRaiseSequence(FirstPersonAnimationSequences.HAND_TOOL_RAISE)
             .setLowerSequence(FirstPersonAnimationSequences.HAND_TOOL_LOWER)

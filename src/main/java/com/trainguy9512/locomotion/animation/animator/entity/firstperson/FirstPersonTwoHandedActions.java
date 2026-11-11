@@ -17,7 +17,7 @@ import com.trainguy9512.locomotion.animation.util.Transition;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.component.ChargedProjectiles;
 
 import java.util.Set;
@@ -99,7 +99,7 @@ public class FirstPersonTwoHandedActions {
                                 .isTakenIfTrue(
                                         StateTransition.takeIfBooleanDriverTrue(FirstPersonDrivers.getUsingItemDriver(hand))
                                                 .and(context -> context.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand)) == FirstPersonHandPoses.BOW)
-                                                .and(context -> context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() == UseAnim.BOW)
+                                                .and(context -> context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() == ItemUseAnimation.BOW)
                                 )
                                 .bindToOnTransitionTaken(context -> {
                                     ItemStack projectileStack = context.getDriverValue(FirstPersonDrivers.PROJECTILE_ITEM);
@@ -119,7 +119,7 @@ public class FirstPersonTwoHandedActions {
                                         bowReleaseState
                                 ))
                         .addOutboundTransition(StateTransition.builder(TWO_HANDED_ACTION_NORMAL_STATE)
-                                .isTakenIfTrue(context -> context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() != UseAnim.BOW)
+                                .isTakenIfTrue(context -> context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() != ItemUseAnimation.BOW)
                                 .setTiming(Transition.builder(TimeSpan.of60FramesPerSecond(10)).setEasement(Easing.SINE_IN_OUT).build())
                                 .build())
                         .build()
@@ -148,7 +148,7 @@ public class FirstPersonTwoHandedActions {
             if (context.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand)) != FirstPersonHandPoses.CROSSBOW) {
                 return false;
             }
-            if (context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() != UseAnim.CROSSBOW) {
+            if (context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() != ItemUseAnimation.CROSSBOW) {
                 return false;
             }
             ChargedProjectiles chargedProjectiles = context.getDriver(FirstPersonDrivers.getItemDriver(hand)).getCurrentValue().get(DataComponents.CHARGED_PROJECTILES);
@@ -205,7 +205,7 @@ public class FirstPersonTwoHandedActions {
                                         crossbowFinishReloadState
                                 ))
                         .addOutboundTransition(StateTransition.builder(TWO_HANDED_ACTION_NORMAL_STATE)
-                                .isTakenIfTrue(context -> context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() != UseAnim.CROSSBOW)
+                                .isTakenIfTrue(context -> context.getDriverValue(FirstPersonDrivers.getItemDriver(hand)).getUseAnimation() != ItemUseAnimation.CROSSBOW)
                                 .setTiming(Transition.builder(TimeSpan.of60FramesPerSecond(10)).setEasement(Easing.SINE_IN_OUT).build())
                                 .bindToOnTransitionTaken(context -> {
                                 })

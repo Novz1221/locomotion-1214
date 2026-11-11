@@ -121,7 +121,7 @@ public class AnimationDataContainer implements DriverGetter {
         return pose.convertedToComponentSpace().convertedToModelPartSpace();
     }
 
-    public <S> void setupAnimWithAnimationPose(Model<S> model, float partialTicks){
+    public void setupAnimWithAnimationPose(Model model, float partialTicks){
         model.resetPose();
 
         ModelPartSpacePose pose = this.getInterpolatedAnimationPose(partialTicks);

@@ -18,7 +18,7 @@ import net.minecraft.core.component.TypedDataComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 
 import java.util.Objects;
 import java.util.Set;
@@ -315,11 +315,11 @@ public class FirstPersonHandPoseSwitching {
         }
         // Duct-tape solution for hand pose functions like consumables not being able to update the rendered item before the hard switch condition is updated.
         if (context.getDriver(FirstPersonDrivers.getUsingItemDriver(hand)).getPreviousValue()) {
-            UseAnim useAnimation = context.getDriver(FirstPersonDrivers.getItemCopyReferenceDriver(hand)).getPreviousValue().getUseAnimation();
-            if (useAnimation == UseAnim.EAT) {
+            ItemUseAnimation useAnimation = context.getDriver(FirstPersonDrivers.getItemCopyReferenceDriver(hand)).getPreviousValue().getUseAnimation();
+            if (useAnimation == ItemUseAnimation.EAT) {
                 return false;
             }
-            if (useAnimation == UseAnim.DRINK) {
+            if (useAnimation == ItemUseAnimation.DRINK) {
                 return false;
             }
         }

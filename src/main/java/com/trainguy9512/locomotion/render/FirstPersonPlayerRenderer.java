@@ -29,7 +29,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
-import net.minecraft.world.entity.player.PlayerSkin;
+import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
@@ -49,6 +50,8 @@ public class FirstPersonPlayerRenderer {
     private final EntityRenderDispatcher entityRenderDispatcher;
     private final ItemRenderer itemRenderer;
     private final JointAnimatorDispatcher jointAnimatorDispatcher;
+    private final MapRenderer mapRenderer;
+    private final MapRenderState mapRenderState = new MapRenderState();
 
     public static boolean IS_RENDERING_LOCOMOTION_FIRST_PERSON = false;
     public static boolean SHOULD_FLIP_ITEM_TRANSFORM = false;
@@ -58,7 +61,8 @@ public class FirstPersonPlayerRenderer {
     public FirstPersonPlayerRenderer(EntityRendererProvider.Context context) {
         this.minecraft = Minecraft.getInstance();
         this.entityRenderDispatcher = context.getEntityRenderDispatcher();
-        this.itemRenderer = context.getItemRenderer();
+        this.itemRenderer = this.minecraft.getItemRenderer();
+        this.mapRenderer = context.getMapRenderer();
         this.jointAnimatorDispatcher = JointAnimatorDispatcher.getInstance();
     }
 
@@ -248,8 +252,8 @@ public class FirstPersonPlayerRenderer {
         vertexConsumer.addVertex(matrix, -7.0F, -7.0F, 0.0F).setColor(-1).setUv(0.0F, 0.0F).setLight(combinedLight);
 
         if (mapItemSavedData != null && mapId != null) {
-            MapRenderer mapRenderer = this.minecraft.gameRenderer.getMapRenderer();
-            mapRenderer.render(poseStack, buffer, mapId, mapItemSavedData, false, combinedLight);
+            this.mapRenderer.extractRenderState(mapId, mapItemSavedData, this.mapRenderState);
+            this.mapRenderer.render(this.mapRenderState, poseStack, buffer, false, combinedLight);
         }
     }
 

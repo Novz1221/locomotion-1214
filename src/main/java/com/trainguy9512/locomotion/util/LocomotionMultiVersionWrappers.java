@@ -1,14 +1,14 @@
 package com.trainguy9512.locomotion.util;
 
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 
 public class LocomotionMultiVersionWrappers {
 
-    public static UseAnim getTridentUseAnimation() {
-        return UseAnim.SPEAR;
+    public static ItemUseAnimation getTridentUseAnimation() {
+        return ItemUseAnimation.SPEAR;
     }
 
-    public static UseAnim getSpearUseAnimation() {
+    public static ItemUseAnimation getSpearUseAnimation() {
         throw new RuntimeException("1.21.11 feature attempted to be used in older version");
     }
 

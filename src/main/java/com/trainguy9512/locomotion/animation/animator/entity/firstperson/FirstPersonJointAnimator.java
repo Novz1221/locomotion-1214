@@ -27,7 +27,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -206,7 +206,7 @@ public class FirstPersonJointAnimator implements LivingEntityJointAnimator<Local
         this.handleGroundMovementMontages(player, driverContainer, montageManager);
         this.extractItemData(player, driverContainer);
 
-        driverContainer.getDriver(HOTBAR_SLOT).setValue(dataReference.getInventory().selected);
+        driverContainer.getDriver(FirstPersonDrivers.HOTBAR_SLOT).setValue(player.getInventory().selected);
 
 
         this.extractAttackConditionData(player, driverContainer);
@@ -296,7 +296,7 @@ public class FirstPersonJointAnimator implements LivingEntityJointAnimator<Local
                 && !player.onGround()
                 && !player.onClimbable()
                 && !player.isInWater()
-                && !player.isMobilityRestricted()
+                && !player.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS)
                 && !player.isPassenger()
                 && !player.isSprinting();
 
@@ -316,7 +316,7 @@ public class FirstPersonJointAnimator implements LivingEntityJointAnimator<Local
             FirstPersonUseAnimations.playUseAnimationIfTriggered(driverContainer, montageManager, hand);
             FirstPersonItemUpdateAnimations.testForAndPlayItemUpdateAnimations(driverContainer, montageManager, hand);
 
-//            if (itemInHand.getUseAnimation() == UseAnim.CROSSBOW && renderedItemInHand.getUseAnimation() == UseAnim.CROSSBOW) {
+//            if (itemInHand.getUseAnimation() == ItemUseAnimation.CROSSBOW && renderedItemInHand.getUseAnimation() == ItemUseAnimation.CROSSBOW) {
 //                if (itemInHand.has(DataComponents.CHARGED_PROJECTILES) && renderedItemInHand.has(DataComponents.CHARGED_PROJECTILES)) {
 //                    if (itemInHand.get(DataComponents.CHARGED_PROJECTILES).isEmpty() && !renderedItemInHand.get(DataComponents.CHARGED_PROJECTILES).isEmpty()) {
 //                        if (driverContainer.getDriver(FirstPersonDrivers.getHasInteractedWithDriver(hand)).hasBeenTriggered()) {
@@ -335,7 +335,7 @@ public class FirstPersonJointAnimator implements LivingEntityJointAnimator<Local
                 montageManager.interruptMontagesInSlot(FirstPersonMontages.getAttackSlot(hand), Transition.builder(TimeSpan.ofSeconds(0.1f)).setEasement(Easing.SINE_IN_OUT).build());
                 driverContainer.getDriver(FirstPersonDrivers.LAST_USED_HAND).setValue(hand);
                 driverContainer.getDriver(FirstPersonDrivers.PROJECTILE_ITEM).setValue(dataReference.getProjectile(itemInHand));
-                if (itemInHand.getUseAnimation() == UseAnim.CROSSBOW) {
+                if (itemInHand.getUseAnimation() == ItemUseAnimation.CROSSBOW) {
                     float chargeTime = EnchantmentHelper.modifyCrossbowChargingTime(itemInHand, dataReference, 1.25f);
                     float chargeSpeedMultiplier = 1.25f / chargeTime;
                     driverContainer.getDriver(FirstPersonDrivers.CROSSBOW_RELOAD_SPEED).setValue(chargeSpeedMultiplier);

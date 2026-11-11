@@ -801,20 +801,20 @@ public class PlayerPartAnimatorOld extends LivingEntityPartAnimator<Player, Play
             return HumanoidModel.ArmPose.EMPTY;
         }
         if (livingEntity.getUsedItemHand() == hand && livingEntity.getUseItemRemainingTicks() > 0) {
-            UseAnim useAnim = itemStack.getUseAnimation();
-            if (useAnim == UseAnim.BLOCK) {
+            ItemUseAnimation useAnim = itemStack.getUseAnimation();
+            if (useAnim == ItemUseAnimation.BLOCK) {
                 return HumanoidModel.ArmPose.BLOCK;
             }
-            if (useAnim == UseAnim.BOW) {
+            if (useAnim == ItemUseAnimation.BOW) {
                 return HumanoidModel.ArmPose.BOW_AND_ARROW;
             }
-            if (useAnim == UseAnim.SPEAR) {
+            if (useAnim == ItemUseAnimation.SPEAR) {
                 return HumanoidModel.ArmPose.THROW_SPEAR;
             }
-            if (useAnim == UseAnim.CROSSBOW && hand == livingEntity.getUsedItemHand()) {
+            if (useAnim == ItemUseAnimation.CROSSBOW && hand == livingEntity.getUsedItemHand()) {
                 return HumanoidModel.ArmPose.CROSSBOW_CHARGE;
             }
-            if (useAnim == UseAnim.SPYGLASS) {
+            if (useAnim == ItemUseAnimation.SPYGLASS) {
                 return HumanoidModel.ArmPose.SPYGLASS;
             }
         } else if (!livingEntity.swinging && itemStack.is(Items.CROSSBOW) && CrossbowItem.isCharged(itemStack)) {

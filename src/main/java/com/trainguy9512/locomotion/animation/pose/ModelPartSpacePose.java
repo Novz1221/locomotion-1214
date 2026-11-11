@@ -17,7 +17,7 @@ public class ModelPartSpacePose extends Pose {
         return new ModelPartSpacePose(pose);
     }
 
-    public <S> void setupAnimOnModel(Model<S> model) {
+    public void setupAnimOnModel(Model model) {
         model.resetPose();
 
         JointSkeleton jointSkeleton = this.getJointSkeleton();
