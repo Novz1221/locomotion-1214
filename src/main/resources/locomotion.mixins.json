@@ -1,0 +1,25 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.trainguy9512.locomotion.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": [
+    "game.MixinMinecraft",
+    "game.MixinMultiPlayerGameMode",
+    "item.MixinItemTransform",
+    "item.property.MixinCrossbowPull",
+    "item.property.MixinIsUsingItem",
+    "item.property.MixinUseCycle",
+    "item.property.MixinUseDuration",
+    "render.MixinEntityRenderDispatcher",
+    "render.MixinEntityRenderer",
+    "render.MixinEntityRenderState",
+    "render.MixinGameRenderer",
+    "render.MixinItemInHandRenderer",
+    "render.MixinModelPart"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
