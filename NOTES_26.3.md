@@ -23,3 +23,10 @@ Lisensi upstream: dilarang publish port ke CurseForge/Modrinth tanpa izin penuli
   supaya satu signature salah tidak mematikan yang lain. Cek log: "Mixin apply for mod locomotion failed".
 - BELUM DIKOMPILASI. Tebakan API yang paling mungkin meleset: RenderTypes (paket rendertype), skin.body().texturePath(),
   ItemModelResolver.updateForLiving, ItemTransform.apply, signature bobView.
+
+## Tahap 3b (dari log build #14)
+- 26.3 memindahkan kelas: PlayerModel -> client.model.player, PlayerSkin -> world.entity.player,
+  ItemTransform -> client.resources.model.cuboid. PoseStack.mulPose tidak lagi menerima Quaternionf (pakai Matrix4f().rotation(q)).
+- ItemInHandRenderer TIDAK ADA lagi; diganti FirstPersonHandsAndItemsRenderer (+ FirstPersonHandsAndItems,
+  FirstPersonHandsAndItemsRenderState). MixinItemInHandRenderer diparkir di disabled-26.3/ sampai API-nya dibaca dari api-dump.
+- Workflow sekarang menyimpan api-dump.txt sebagai artifact.

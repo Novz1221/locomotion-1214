@@ -3,8 +3,9 @@ package com.trainguy9512.locomotion.mixin.item;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.trainguy9512.locomotion.render.FirstPersonPlayerRenderer;
-import net.minecraft.client.renderer.block.model.ItemTransform;
+import net.minecraft.client.resources.model.cuboid.ItemTransform;
 import net.minecraft.util.Mth;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +20,7 @@ public class MixinItemTransform {
     )
     public void flipItemModel(boolean leftHand, PoseStack poseStack, CallbackInfo ci) {
         if (FirstPersonPlayerRenderer.SHOULD_FLIP_ITEM_TRANSFORM && FirstPersonPlayerRenderer.IS_RENDERING_LOCOMOTION_FIRST_PERSON) {
-            poseStack.mulPose(Axis.YP.rotation(Mth.PI));
+            poseStack.mulPose(new Matrix4f().rotation(Axis.YP.rotation(Mth.PI)));
         }
     }
 }

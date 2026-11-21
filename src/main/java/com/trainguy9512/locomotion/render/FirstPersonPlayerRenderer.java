@@ -12,7 +12,7 @@ import com.trainguy9512.locomotion.animation.data.AnimationDataContainer;
 import com.trainguy9512.locomotion.animation.joint.JointChannel;
 import com.trainguy9512.locomotion.animation.pose.ModelPartSpacePose;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -33,13 +33,14 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.entity.player.PlayerModelType;
-import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.util.Objects;
@@ -109,7 +110,7 @@ public class FirstPersonPlayerRenderer {
 
         // Rendering the arm
         poseStack.pushPose();
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180));
+        poseStack.mulPose(new Matrix4f().rotation(Axis.ZP.rotationDegrees(180)));
         this.renderArm(player, playerModel, side, poseStack, collector, combinedLight);
 
         Identifier genericItemPoseIdentifier = dataContainer.getDriverValue(FirstPersonDrivers.getGenericItemPoseDriver(hand));

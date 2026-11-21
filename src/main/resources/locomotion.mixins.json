@@ -18,7 +18,6 @@
     "render.MixinGameRenderer",
     "render.MixinGameRendererBob",
     "render.MixinGameRendererCamera",
-    "render.MixinItemInHandRenderer",
     "render.MixinModelPart"
   ],
   "injectors": {

@@ -14,18 +14,43 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build --stacktrace
-      - name: Dump API Minecraft (untuk port renderer)
+      - name: Dump API Minecraft
         if: always()
         run: |
-          MC=$(find ~/.gradle /home/runner -name 'minecraft*26.3*.jar' -not -name '*sources*' 2>/dev/null | head -5)
-          echo "JAR: $MC"
-          J=$(echo "$MC" | head -1)
-          echo "=== nama kelas terkait ==="
-          unzip -l "$J" | awk '{print $4}' | grep -E "ItemInHand|HandRenderer|ArmRenderer|FirstPerson|SubmitNodeCollector|ItemStackRenderState|ItemModelResolver|AvatarRenderer|player/PlayerModel|PlayerSkin|PlayerModelType|ItemTransform|ItemDisplayContext|MapRenderer|ModelPart" | head -80
-          for c in net.minecraft.client.renderer.ItemInHandRenderer net.minecraft.client.renderer.entity.player.AvatarRenderer net.minecraft.client.renderer.SubmitNodeCollector net.minecraft.client.renderer.item.ItemStackRenderState; do
-            echo "=== javap $c ==="; javap -p -cp "$J" "$c" 2>&1 | head -80
-          done
-          echo "=== GameRenderer metode render* ==="; javap -p -cp "$J" net.minecraft.client.renderer.GameRenderer 2>&1 | grep -E "render|bob|Hand"
+          J=$(find ~/.gradle /home/runner -name 'minecraft-merged-deobf*26.3*.jar' -not -name '*sources*' 2>/dev/null | head -1)
+          echo "JAR: $J" | tee api-dump.txt
+          dump() { echo "=== javap $1 ===" >> api-dump.txt; javap -p -cp "$J" "$1" >> api-dump.txt 2>&1; }
+          echo "=== kelas RenderType/RenderTypes ===" >> api-dump.txt
+          unzip -l "$J" | awk '{print $4}' | grep -E "RenderTypes?\.class|rendertype/" | head -40 >> api-dump.txt
+          for c in \
+            net.minecraft.client.renderer.FirstPersonHandsAndItemsRenderer \
+            net.minecraft.client.player.FirstPersonHandsAndItems \
+            net.minecraft.client.renderer.state.level.FirstPersonHandsAndItemsRenderState \
+            'net.minecraft.client.renderer.state.level.FirstPersonHandsAndItemsRenderState$HandRenderSelection' \
+            net.minecraft.client.renderer.OrderedSubmitNodeCollector \
+            net.minecraft.client.model.geom.ModelPart \
+            net.minecraft.client.model.player.PlayerModel \
+            net.minecraft.world.entity.player.PlayerSkin \
+            'net.minecraft.world.entity.player.PlayerSkin$Patch' \
+            net.minecraft.world.entity.player.PlayerModelType \
+            net.minecraft.client.renderer.item.ItemModelResolver \
+            'net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState' \
+            net.minecraft.client.resources.model.cuboid.ItemTransform \
+            net.minecraft.client.renderer.MapRenderer \
+            net.minecraft.client.renderer.entity.EntityRenderDispatcher \
+            net.minecraft.client.player.AbstractClientPlayer \
+            com.mojang.blaze3d.vertex.PoseStack \
+            net.minecraft.client.renderer.state.level.PlayerRenderState \
+            net.minecraft.client.renderer.state.level.CameraRenderState ; do dump "$c"; done
+          echo "=== GameRenderer renderItemInHand/bob ===" >> api-dump.txt
+          javap -p -c -cp "$J" net.minecraft.client.renderer.GameRenderer 2>&1 | grep -E "FirstPersonHands|renderItemInHand|bobHurt|bobView" >> api-dump.txt
+          wc -c api-dump.txt
+      - name: Upload API dump
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-dump
+          path: api-dump.txt
       - name: Upload jar
         if: always()
         uses: actions/upload-artifact@v4
