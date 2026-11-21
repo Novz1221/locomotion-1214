@@ -9,3 +9,8 @@ Belum / perlu lewat error build:
 - LocomotionMultiVersionWrappers: getSpearUseAnimation sekarang harus valid (ItemUseAnimation.SPEAR).
 - Input SDL3 (26.3) tidak dipakai mod ini, tapi mixin render/GameRenderer mungkin berubah.
 Lisensi upstream: dilarang publish port ke CurseForge/Modrinth tanpa izin penulis; pakai pribadi saja.
+
+## Tahap 2 (setelah log build #1)
+- Perbaikan mekanis: Tuple, BlockEntityType.getKey, EntityTypes.*, Inventory.getSelectedSlot, gui.screen(), FileToIdConverter, ResourceLoader v1.
+- Renderer tangan/item dinonaktifkan sementara (MixinItemInHandRenderer, MixinItemTransform, FirstPersonPlayerRenderer lama ada di folder disabled-26.3/).
+- TODO: player.swingTime tidak ada di 26.3 (diganti 0), SwingSource.CLIENT dicek via nama enum.

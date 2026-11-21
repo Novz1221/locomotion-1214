@@ -115,7 +115,7 @@ public class LocomotionConfig {
             return LocomotionConfigScreen::createConfigScreen;
         } else {
             return parent -> new AlertScreen(
-                    () -> Minecraft.getInstance().setScreen(parent),
+                    () -> Minecraft.getInstance().gui.setScreen(parent),
                     Component.translatable("locomotion.config.yacl_not_found.header"),
                     Component.translatable("locomotion.config.yacl_not_found.description"),
                     Component.translatable("locomotion.config.yacl_not_found.close"),

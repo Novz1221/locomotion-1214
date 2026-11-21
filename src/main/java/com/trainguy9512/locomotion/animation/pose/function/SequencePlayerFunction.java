@@ -10,7 +10,7 @@ import com.trainguy9512.locomotion.resource.LocomotionResources;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.util.Tuple;
+import com.trainguy9512.locomotion.util.Tuple;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

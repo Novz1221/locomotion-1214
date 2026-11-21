@@ -42,7 +42,7 @@ public class LocomotionMain {
 	private static void registerAnimators() {
 		JointAnimatorRegistry.registerFirstPersonPlayerJointAnimator(new FirstPersonJointAnimator());
 
-		JointAnimatorRegistry.registerEntityJointAnimator(EntityType.PLAYER, new ThirdPersonPlayerJointAnimator());
+		JointAnimatorRegistry.registerEntityJointAnimator(net.minecraft.world.entity.EntityTypes.PLAYER, new ThirdPersonPlayerJointAnimator());
 	}
 
 	/*

@@ -136,7 +136,7 @@ public class JointAnimatorDispatcher {
         if (potentialJointAnimator.isPresent()) {
             BlockEntityJointAnimator<T> jointAnimator = potentialJointAnimator.get();
             AnimationDataContainer dataContainer = AnimationDataContainer.of(jointAnimator);
-            dataContainer.getDriver(BLOCK_ENTITY_TYPE_DRIVER).setValue(BlockEntityType.getKey(type));
+            dataContainer.getDriver(BLOCK_ENTITY_TYPE_DRIVER).setValue(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(type));
             return Optional.of(dataContainer);
         }
         return Optional.empty();
@@ -157,7 +157,7 @@ public class JointAnimatorDispatcher {
     }
 
     private static boolean blockEntityIsEnabledInConfig(BlockEntityType<?> type) {
-        Identifier typeIdentifier = BlockEntityType.getKey(type);
+        Identifier typeIdentifier = net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(type);
         assert typeIdentifier != null;
         return LocomotionMain.CONFIG.data().blockEntities.enabledBlockEntities.getOrDefault(typeIdentifier.toString(), true);
     }
@@ -184,7 +184,7 @@ public class JointAnimatorDispatcher {
             if (this.blockEntityAnimationDataContainerStorage.containsKey(packedBlockPos)) {
 
                 AnimationDataContainer dataContainer = this.blockEntityAnimationDataContainerStorage.get(packedBlockPos);
-                if (dataContainer.getDriverValue(BLOCK_ENTITY_TYPE_DRIVER) == BlockEntityType.getKey(type)) {
+                if (dataContainer.getDriverValue(BLOCK_ENTITY_TYPE_DRIVER) == net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(type)) {
                     // If the block is within range and its type matches the requested type, return it.
                     return Optional.of(dataContainer);
                 } else {

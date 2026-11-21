@@ -8,7 +8,7 @@ import com.trainguy9512.locomotion.animation.joint.skeleton.JointSkeleton;
 import com.trainguy9512.locomotion.animation.sequence.AnimationSequence;
 import com.trainguy9512.locomotion.resource.json.GsonConfiguration;
 import net.minecraft.resources.Identifier;
-import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
@@ -24,7 +24,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class LocomotionResources implements SimpleSynchronousResourceReloadListener {
+public class LocomotionResources implements ResourceManagerReloadListener {
 
     private static final Logger LOGGER = LogManager.getLogger("Locomotion/Resources");
 
@@ -61,11 +61,6 @@ public class LocomotionResources implements SimpleSynchronousResourceReloadListe
         } else {
             throw new IllegalArgumentException("Tried to access animation sequence from resource location " + sequenceLocation + ", but it was not found in the loaded data.");
         }
-    }
-
-    @Override
-    public Identifier getFabricId() {
-        return RELOADER_IDENTIFIER;
     }
 
     @Override
@@ -121,7 +116,7 @@ public class LocomotionResources implements SimpleSynchronousResourceReloadListe
     private static <D> CompletableFuture<Map<Identifier, D>> loadJsonResources(ResourceManager manager, Executor backgroundExecutor, Class<D> type, String pathToListFrom, Consumer<Identifier> onSuccessfullyLoaded) {
         return CompletableFuture.supplyAsync(() -> {
             Predicate<Identifier> isAssetJson = Identifier -> Identifier.getPath().endsWith(".json");
-            Map<Identifier, Resource> foundResources = manager.listResources(pathToListFrom, isAssetJson);
+            Map<Identifier, Resource> foundResources = net.minecraft.resources.FileToIdConverter.json(pathToListFrom).listMatchingResources(manager);
 
             Map<Identifier, D> deserializedResources = Maps.newHashMap();
             foundResources.forEach((Identifier, resource) -> {

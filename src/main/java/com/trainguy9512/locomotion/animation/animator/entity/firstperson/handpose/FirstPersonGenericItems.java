@@ -139,7 +139,7 @@ public class FirstPersonGenericItems {
     }
 
     private static boolean isDoorItem(ItemStack itemStack) {
-        return itemStack.is(ItemTags.DOORS);
+        return (itemStack.getItem() instanceof net.minecraft.world.item.BlockItem blockItem && blockItem.getBlock() instanceof net.minecraft.world.level.block.DoorBlock);
     }
 
     public static Identifier getCurrentBasePose(DriverGetter dataContainer, InteractionHand hand) {
