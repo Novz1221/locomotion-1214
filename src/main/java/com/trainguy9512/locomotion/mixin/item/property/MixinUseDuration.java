@@ -7,7 +7,7 @@ import com.trainguy9512.locomotion.render.FirstPersonPlayerRenderer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.numeric.UseDuration;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +21,7 @@ public class MixinUseDuration {
             at = @At("RETURN"),
             cancellable = true
     )
-    public void injectLocomotionUseDuration(ItemStack stack, ClientLevel level, LivingEntity owner, int seed, CallbackInfoReturnable<Float> cir) {
+    public void injectLocomotionUseDuration(ItemStack stack, ClientLevel level, ItemOwner owner, int seed, CallbackInfoReturnable<Float> cir) {
         if (FirstPersonPlayerRenderer.IS_RENDERING_LOCOMOTION_FIRST_PERSON) {
             JointAnimatorDispatcher.getInstance().getInterpolatedFirstPersonPlayerPose().ifPresent(pose -> {
                 JointAnimatorDispatcher.getInstance().getFirstPersonPlayerDataContainer().ifPresent(driverContainer -> {

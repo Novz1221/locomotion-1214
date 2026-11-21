@@ -14,11 +14,18 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build --stacktrace
-      - name: Isi jar
+      - name: Dump API Minecraft (untuk port renderer)
+        if: always()
         run: |
-          ls -la build/libs
-          for j in build/libs/*.jar; do echo "== $j"; unzip -l "$j" | head -30; done
-          echo "jumlah file java:"; find src -name '*.java' | wc -l
+          MC=$(find ~/.gradle /home/runner -name 'minecraft*26.3*.jar' -not -name '*sources*' 2>/dev/null | head -5)
+          echo "JAR: $MC"
+          J=$(echo "$MC" | head -1)
+          echo "=== nama kelas terkait ==="
+          unzip -l "$J" | awk '{print $4}' | grep -E "ItemInHand|HandRenderer|ArmRenderer|FirstPerson|SubmitNodeCollector|ItemStackRenderState|ItemModelResolver|AvatarRenderer|player/PlayerModel|PlayerSkin|PlayerModelType|ItemTransform|ItemDisplayContext|MapRenderer|ModelPart" | head -80
+          for c in net.minecraft.client.renderer.ItemInHandRenderer net.minecraft.client.renderer.entity.player.AvatarRenderer net.minecraft.client.renderer.SubmitNodeCollector net.minecraft.client.renderer.item.ItemStackRenderState; do
+            echo "=== javap $c ==="; javap -p -cp "$J" "$c" 2>&1 | head -80
+          done
+          echo "=== GameRenderer metode render* ==="; javap -p -cp "$J" net.minecraft.client.renderer.GameRenderer 2>&1 | grep -E "render|bob|Hand"
       - name: Upload jar
         if: always()
         uses: actions/upload-artifact@v4

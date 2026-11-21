@@ -27,7 +27,8 @@ public abstract class MixinGameRenderer {
             method = "renderLevel",
             at = @At("HEAD")
     )
-    private void computePosePriorToRendering(DeltaTracker deltaTracker, CallbackInfo ci){
+    private void computePosePriorToRendering(CallbackInfo ci){
+        DeltaTracker deltaTracker = this.minecraft.getDeltaTracker();
         if (LocomotionMain.CONFIG.data().firstPersonPlayer.enableRenderer) {
             JointAnimatorDispatcher jointAnimatorDispatcher = JointAnimatorDispatcher.getInstance();
             jointAnimatorDispatcher.getFirstPersonPlayerDataContainer().ifPresent(dataContainer ->
