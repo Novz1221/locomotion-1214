@@ -14,3 +14,12 @@ Lisensi upstream: dilarang publish port ke CurseForge/Modrinth tanpa izin penuli
 - Perbaikan mekanis: Tuple, BlockEntityType.getKey, EntityTypes.*, Inventory.getSelectedSlot, gui.screen(), FileToIdConverter, ResourceLoader v1.
 - Renderer tangan/item dinonaktifkan sementara (MixinItemInHandRenderer, MixinItemTransform, FirstPersonPlayerRenderer lama ada di folder disabled-26.3/).
 - TODO: player.swingTime tidak ada di 26.3 (diganti 0), SwingSource.CLIENT dicek via nama enum.
+
+## Tahap 3 (renderer tangan diport)
+- Penyebab "tangan tetap vanila": 3 file renderer dimatikan di tahap 2 (sudah diaktifkan lagi di sini) + mixin kamera gagal
+  (`bobHurt` sekarang `(CameraRenderState, PoseStack)`).
+- FirstPersonPlayerRenderer sekarang memakai SubmitNodeCollector (submitModelPart / ItemStackRenderState.submit / submitCustomGeometry).
+- Kamera dipecah jadi MixinGameRenderer (renderLevel), MixinGameRendererCamera (bobHurt), MixinGameRendererBob (bobView)
+  supaya satu signature salah tidak mematikan yang lain. Cek log: "Mixin apply for mod locomotion failed".
+- BELUM DIKOMPILASI. Tebakan API yang paling mungkin meleset: RenderTypes (paket rendertype), skin.body().texturePath(),
+  ItemModelResolver.updateForLiving, ItemTransform.apply, signature bobView.

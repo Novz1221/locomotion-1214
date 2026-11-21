@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Quaternionf;
@@ -25,12 +25,9 @@ public class MixinItemInHandRenderer {
 
     @Shadow @Final private Minecraft minecraft;
 
-    @Inject(
-            method = "renderHandsWithItems",
-            at = @At("HEAD")
-    )
+    @Inject(method = "renderHandsWithItems", at = @At("HEAD"))
     public void locomotion$overrideFirstPersonRendering(
-            float partialTick, PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, LocalPlayer player, int packedLight, CallbackInfo ci
+            float partialTick, PoseStack poseStack, SubmitNodeCollector nodeCollector, LocalPlayer player, int packedLight, CallbackInfo ci
     ) {
         if (!LocomotionMain.CONFIG.data().firstPersonPlayer.enableRenderer) {
             return;
@@ -40,8 +37,8 @@ public class MixinItemInHandRenderer {
             return;
         }
         FirstPersonPlayerRenderer renderer = getter.locomotion$getFirstPersonPlayerRenderer().get();
-        renderer.renderLocomotionArmWithItem(partialTick, poseStack, bufferSource, player, packedLight, InteractionHand.OFF_HAND);
-        renderer.renderLocomotionArmWithItem(partialTick, poseStack, bufferSource, player, packedLight, InteractionHand.MAIN_HAND);
+        renderer.renderLocomotionArmWithItem(partialTick, poseStack, nodeCollector, player, packedLight, InteractionHand.OFF_HAND);
+        renderer.renderLocomotionArmWithItem(partialTick, poseStack, nodeCollector, player, packedLight, InteractionHand.MAIN_HAND);
     }
 
     // Disables camera bob rotation if Locomotion's first person animations are enabled.
@@ -56,13 +53,9 @@ public class MixinItemInHandRenderer {
     }
 
     // Cancel rendering the vanilla hand with item if Locomotion's first person animations are enabled.
-    @Inject(
-            method = "renderArmWithItem",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void locomotion$renderLocomotionArmsWithItems(
-            AbstractClientPlayer player, float partialTick, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equippedProgress, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, CallbackInfo ci
+    @Inject(method = "renderArmWithItem", at = @At("HEAD"), cancellable = true)
+    public void locomotion$cancelVanillaArmWithItem(
+            AbstractClientPlayer player, float partialTick, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equippedProgress, PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, CallbackInfo ci
     ) {
         if (LocomotionMain.CONFIG.data().firstPersonPlayer.enableRenderer) {
             ci.cancel();

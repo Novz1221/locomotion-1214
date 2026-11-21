@@ -7,14 +7,18 @@
   "client": [
     "game.MixinMinecraft",
     "game.MixinMultiPlayerGameMode",
+    "item.MixinItemTransform",
     "item.property.MixinCrossbowPull",
     "item.property.MixinIsUsingItem",
     "item.property.MixinUseCycle",
     "item.property.MixinUseDuration",
     "render.MixinEntityRenderDispatcher",
-    "render.MixinEntityRenderer",
     "render.MixinEntityRenderState",
+    "render.MixinEntityRenderer",
     "render.MixinGameRenderer",
+    "render.MixinGameRendererBob",
+    "render.MixinGameRendererCamera",
+    "render.MixinItemInHandRenderer",
     "render.MixinModelPart"
   ],
   "injectors": {
