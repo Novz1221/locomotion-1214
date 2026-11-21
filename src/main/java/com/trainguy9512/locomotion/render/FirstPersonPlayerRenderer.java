@@ -72,7 +72,7 @@ public class FirstPersonPlayerRenderer {
 
     private PlayerModel getPlayerModel(AbstractClientPlayer player) {
         AvatarRenderer playerRenderer = (AvatarRenderer) this.entityRenderDispatcher.getRenderer(player);
-        return playerRenderer.getModel();
+        return (PlayerModel) playerRenderer.getModel();
     }
 
     private static ModelPart getArmPart(PlayerModel playerModel, HumanoidArm side) {
