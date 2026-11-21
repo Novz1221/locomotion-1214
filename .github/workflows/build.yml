@@ -14,6 +14,11 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build --stacktrace
+      - name: Isi jar
+        run: |
+          ls -la build/libs
+          for j in build/libs/*.jar; do echo "== $j"; unzip -l "$j" | head -30; done
+          echo "jumlah file java:"; find src -name '*.java' | wc -l
       - name: Upload jar
         if: always()
         uses: actions/upload-artifact@v4
