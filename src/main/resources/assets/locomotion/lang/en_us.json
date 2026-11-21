@@ -1,0 +1,69 @@
+{
+  "locomotion.config.yacl_not_found.header": "Configuration API not installed",
+  "locomotion.config.yacl_not_found.description": "Locomotion uses the configuration library \"YetAnotherConfigLib\" to generate the in-game configuration screen. It is not a required dependency, but it must be installed if you would like to adjust the configuration while in-game. Otherwise you may modify the configuration manually in .minecraft/config/locomotion.json",
+  "locomotion.config.yacl_not_found.close": "Close",
+
+  "locomotion.config.title": "Locomotion Configuration",
+  "locomotion.config.category.general.name": "General",
+  "locomotion.config.category.general.tooltip": "General settings for all animations",
+  "locomotion.config.category.first_person_player.name": "First Person Player",
+  "locomotion.config.category.first_person_player.tooltip": "Settings for first person player animations",
+
+  "locomotion.config.option.enable_first_person_renderer.name": "First Person Animations",
+  "locomotion.config.option.enable_first_person_renderer.description": "Whether Locomotion's first person player animations should be used or not. Unlike most other animations provided, this one has its own separate renderer that completely overwrites Vanilla's first person renderer. Disable this to show Vanilla's first person player renderer, or for compatibility with mods that integrate into Vanilla's first person renderer.",
+  "locomotion.config.option.enable_first_person_renderer.enabled": "Enabled",
+  "locomotion.config.option.enable_first_person_renderer.disabled": "Disabled",
+
+  "locomotion.config.group.first_person_camera_shake.name": "Camera Shake",
+  "locomotion.config.group.first_person_camera_shake.description": "Settings for adjusting how intense the camera shake animations are.",
+  "locomotion.config.option.first_person_camera_shake_intensity_master.name": "Master Intensity",
+  "locomotion.config.option.first_person_camera_shake_intensity_master.description": "Controls the intensity of all camera shake animations.",
+  "locomotion.config.option.first_person_camera_shake_intensity_movement.name": "Movement Intensity",
+  "locomotion.config.option.first_person_camera_shake_intensity_movement.description": "Controls the intensity of camera shaking from the movement animations, including view bobbing.",
+  "locomotion.config.option.first_person_camera_shake_intensity_item_interactions.name": "Item Interaction Intensity",
+  "locomotion.config.option.first_person_camera_shake_intensity_item_interactions.description": "Controls the intensity of camera shaking from the item interaction animations, including attacking and mining.",
+
+  "locomotion.config.group.first_person_arm_camera_damping.name": "Camera Rotation Arm Damping",
+  "locomotion.config.group.first_person_arm_camera_damping.description": "Settings for adjusting how the arms are rotated when the camera is moved around.",
+  "locomotion.config.option.enable_first_person_arm_camera_damping.name": "Enabled",
+  "locomotion.config.option.enable_first_person_arm_camera_damping.description": "Whether the first person arm dampening is enabled or not. Disabling this makes the arms not move at all when moving the camera.",
+  "locomotion.config.option.first_person_arm_camera_damping_factor.name": "Damping Factor",
+  "locomotion.config.option.first_person_arm_camera_damping_factor.description": "Controls how much friction the spring animation has. The higher the damping, the less it bounces back and forth",
+  "locomotion.config.option.first_person_arm_camera_stiffness_factor.name": "Stiffness Factor",
+  "locomotion.config.option.first_person_arm_camera_stiffness_factor.description": "Controls how quickly the arms rotate to match up with the camera's rotation",
+
+  "locomotion.config.option.first_person_mining_speed.name": "Mining Animation Speed Multiplier",
+  "locomotion.config.option.first_person_mining_speed.description": "Adjusts how fast the mining animations play. 1 is normal speed, 0.5 is half as fast, and 2 is twice as fast",
+
+  "locomotion.config.option.running_arm_swing_intensity.name": "Running Arm Swing Intensity",
+  "locomotion.config.option.running_arm_swing_intensity.description": "Adjusts much the arms will swing during running animations. With a value of 0, the animation will be the same as the walking animation. With a value of 1, the full arm swing animation will play instead of the walking animation",
+
+  "locomotion.config.group.first_person_map.name": "Map Items",
+  "locomotion.config.group.first_person_map.description": "Settings for how map items are displayed and animated.",
+  "locomotion.config.option.first_person_map_movement_animation_intensity.name": "Map Movement Animation Intensity",
+  "locomotion.config.option.first_person_map_movement_animation_intensity.description": "Controls the intensity of movement animations when holding a map item. A lower intensity helps with map readability.",
+
+  "locomotion.config.group.first_person_arm_offset.name": "Arm Position Offset",
+  "locomotion.config.group.first_person_arm_offset.description": "Settings for adjusting the position of the first person arms",
+  "locomotion.config.option.first_person_arm_offset_x.name": "Arm X Offset",
+  "locomotion.config.option.first_person_arm_offset_x.description": "Arm offset on the X (horizontal) axis",
+  "locomotion.config.option.first_person_arm_offset_y.name": "Arm Y Offset",
+  "locomotion.config.option.first_person_arm_offset_y.description": "Arm offset on the Y (vertical) axis",
+  "locomotion.config.option.first_person_arm_offset_z.name": "Arm Z Offset",
+  "locomotion.config.option.first_person_arm_offset_z.description": "Arm offset on the Z (depth) axis",
+
+  "locomotion.config.category.block_entities.name": "Block Entities",
+  "locomotion.config.category.block_entities.tooltip": "Settings for various block entity animations",
+
+  "locomotion.config.group.individual_block_entity_toggles.name": "Individual Block Toggles",
+  "locomotion.config.group.individual_block_entity_toggles.description": "Toggles for each type of block entity",
+
+  "locomotion.config.group.block_entity_optimization.name": "Optimization",
+  "locomotion.config.group.block_entity_optimization.description": "Settings for block entity animations that affect performance.",
+  "locomotion.config.option.block_entity_pose_calculation_frequency.name": "Pose Calculation Frequency",
+  "locomotion.config.option.block_entity_pose_calculation_frequency.description": "How often block entity animations' poses are evaluated. For once per tick, the animation is calculated once every in-game tick and then linearly interpolated. For every frame, the pose is calculated every frame and not interpolated. Once per tick should generally be more optimized, but with 20FPS interpolated animations.",
+  "locomotion.config.option.block_entity_pose_calculation_frequency.enum.calculate_once_per_tick": "Once per tick and interpolated",
+  "locomotion.config.option.block_entity_pose_calculation_frequency.enum.calculate_every_frame": "Every frame",
+  "locomotion.config.option.block_entity_animation_distance.name": "Animation Distance",
+  "locomotion.config.option.block_entity_animation_distance.description": "How far away from the player animations are played. Outside the range, vanilla animations play instead."
+}

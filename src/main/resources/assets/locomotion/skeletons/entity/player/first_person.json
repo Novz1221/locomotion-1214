@@ -1,0 +1,479 @@
+{
+    "format_version": 5,
+    "root_joint": "root_jnt",
+    "custom_attributes": {
+        "crossbow_pull_property": {
+            "type": "float",
+            "default_value": 0.0
+        },
+        "use_duration_property": {
+            "type": "float",
+            "default_value": 0.0
+        },
+        "is_using_property": {
+            "type": "float",
+            "default_value": 0.0
+        }
+    },
+    "joints": {
+        "arm_L_buffer_jnt": {
+            "children": [
+                "arm_L_jnt"
+            ],
+            "mirror_joint": "arm_R_buffer_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    12.667,
+                    12.349,
+                    -10.657
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "arm_L_jnt": {
+            "children": [
+                "hand_L_jnt"
+            ],
+            "mirror_joint": "arm_R_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    1.095,
+                    28.324,
+                    5.571
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "arm_R_buffer_jnt": {
+            "children": [
+                "arm_R_jnt"
+            ],
+            "mirror_joint": "arm_L_buffer_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    -12.666,
+                    12.349,
+                    -10.657
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "arm_R_jnt": {
+            "children": [
+                "hand_R_jnt"
+            ],
+            "mirror_joint": "arm_L_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    5.511,
+                    0.371,
+                    3.183
+                ],
+                "rotation": [
+                    -161.522,
+                    -44.561,
+                    33.406
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "arm_buffer_jnt": {
+            "children": [
+                "arm_L_buffer_jnt",
+                "arm_R_buffer_jnt"
+            ],
+            "mirror_joint": null,
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    -0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "camera_jnt": {
+            "children": [
+                "arm_buffer_jnt"
+            ],
+            "mirror_joint": null,
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0,
+                    0.0,
+                    -0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "hand_L_jnt": {
+            "children": [
+                "item_L_jnt"
+            ],
+            "mirror_joint": "hand_R_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    1.0,
+                    9.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "hand_R_jnt": {
+            "children": [
+                "item_R_jnt"
+            ],
+            "mirror_joint": "hand_L_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    -0.611,
+                    9.351,
+                    0.067
+                ],
+                "rotation": [
+                    -7.335,
+                    -24.046,
+                    67.481
+                ],
+                "scale": [
+                    0.991,
+                    0.991,
+                    0.991
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "item_L_jnt": {
+            "children": [],
+            "mirror_joint": "item_R_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    0.0,
+                    1.0,
+                    -2.0
+                ],
+                "rotation": [
+                    -90.0,
+                    -0.0,
+                    -180.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "item_R_jnt": {
+            "children": [],
+            "mirror_joint": "item_L_jnt",
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    0.0,
+                    1.0,
+                    -2.0
+                ],
+                "rotation": [
+                    -90.0,
+                    -0.0,
+                    -180.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "root_jnt": {
+            "children": [
+                "camera_jnt"
+            ],
+            "mirror_joint": null,
+            "model_part_identifier": null,
+            "reference_pose": {
+                "translation": [
+                    0.0,
+                    -0.0,
+                    -0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "visibility": true
+            },
+            "model_part_offset": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            }
+        }
+    }
+}
