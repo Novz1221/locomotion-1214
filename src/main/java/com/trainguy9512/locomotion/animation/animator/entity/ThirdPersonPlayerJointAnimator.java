@@ -10,19 +10,19 @@ import com.trainguy9512.locomotion.animation.pose.function.PoseFunction;
 import com.trainguy9512.locomotion.animation.pose.function.cache.CachedPoseContainer;
 import com.trainguy9512.locomotion.animation.pose.function.montage.MontageManager;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
-public class ThirdPersonPlayerJointAnimator implements EntityJointAnimator<Player, PlayerRenderState> {
+public class ThirdPersonPlayerJointAnimator implements EntityJointAnimator<Player, AvatarRenderState> {
     @Override
-    public void postProcessModelParts(EntityModel<PlayerRenderState> entityModel, PlayerRenderState entityRenderState) {
+    public void postProcessModelParts(EntityModel<AvatarRenderState> entityModel, AvatarRenderState entityRenderState) {
 
     }
 
     @Override
-    public ResourceLocation getJointSkeleton() {
-        return ResourceLocation.fromNamespaceAndPath(LocomotionMain.MOD_ID, "skeletons/entity/player/third_person.json");
+    public Identifier getJointSkeleton() {
+        return Identifier.fromNamespaceAndPath(LocomotionMain.MOD_ID, "skeletons/entity/player/third_person.json");
     }
 
     @Override

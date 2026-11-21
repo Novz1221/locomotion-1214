@@ -20,8 +20,8 @@ import com.trainguy9512.locomotion.animation.util.Transition;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -36,7 +36,7 @@ import org.joml.Vector3f;
 
 import java.util.Set;
 
-public class FirstPersonJointAnimator implements LivingEntityJointAnimator<LocalPlayer, PlayerRenderState> {
+public class FirstPersonJointAnimator implements LivingEntityJointAnimator<LocalPlayer, AvatarRenderState> {
 
     private static final Logger LOGGER = LogManager.getLogger("Locomotion/FPJointAnimator");
 
@@ -104,12 +104,12 @@ public class FirstPersonJointAnimator implements LivingEntityJointAnimator<Local
     }
 
     @Override
-    public void postProcessModelParts(EntityModel<PlayerRenderState> entityModel, PlayerRenderState entityRenderState) {
+    public void postProcessModelParts(EntityModel<AvatarRenderState> entityModel, AvatarRenderState entityRenderState) {
     }
 
     @Override
-    public ResourceLocation getJointSkeleton() {
-        return ResourceLocation.fromNamespaceAndPath(LocomotionMain.MOD_ID, "skeletons/entity/player/first_person.json");
+    public Identifier getJointSkeleton() {
+        return Identifier.fromNamespaceAndPath(LocomotionMain.MOD_ID, "skeletons/entity/player/first_person.json");
     }
 
     @Override

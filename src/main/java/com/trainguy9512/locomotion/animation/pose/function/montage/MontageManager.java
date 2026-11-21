@@ -10,7 +10,7 @@ import com.trainguy9512.locomotion.animation.sequence.AnimationSequence;
 import com.trainguy9512.locomotion.resource.LocomotionResources;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +146,7 @@ public class MontageManager {
         private float interruptTick;
         private Transition interruptTransition;
 
-        private final ResourceLocation additiveBasePoseLocation;
+        private final Identifier additiveBasePoseLocation;
         private LocalSpacePose additiveBasePose;
         private LocalSpacePose additiveSubtractionPose;
 
@@ -205,7 +205,7 @@ public class MontageManager {
                     );
                 }
                 if (this.additiveSubtractionPose == null) {
-                    ResourceLocation sequenceLocation = this.configuration.animationSequence();
+                    Identifier sequenceLocation = this.configuration.animationSequence();
                     AnimationSequence sequence = LocomotionResources.getOrThrowAnimationSequence(sequenceLocation);
                     this.additiveSubtractionPose = AnimationSequence.samplePose(
                             jointSkeleton,

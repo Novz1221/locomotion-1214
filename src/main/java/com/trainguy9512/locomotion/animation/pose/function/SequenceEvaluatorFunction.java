@@ -5,7 +5,7 @@ import com.trainguy9512.locomotion.animation.data.PoseTickEvaluationContext;
 import com.trainguy9512.locomotion.animation.pose.LocalSpacePose;
 import com.trainguy9512.locomotion.animation.sequence.AnimationSequence;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -14,26 +14,26 @@ import java.util.function.Predicate;
 
 public class SequenceEvaluatorFunction implements PoseFunction<LocalSpacePose> {
 
-    private final Function<PoseCalculationContext, ResourceLocation> animationSequenceFunction;
+    private final Function<PoseCalculationContext, Identifier> animationSequenceFunction;
     private final Function<PoseCalculationContext, TimeSpan> sequenceTimeFunction;
 
-    private SequenceEvaluatorFunction(Function<PoseCalculationContext, ResourceLocation> animationSequenceFunction, Function<PoseCalculationContext, TimeSpan> sequenceTimeFunction) {
+    private SequenceEvaluatorFunction(Function<PoseCalculationContext, Identifier> animationSequenceFunction, Function<PoseCalculationContext, TimeSpan> sequenceTimeFunction) {
         this.animationSequenceFunction = animationSequenceFunction;
         this.sequenceTimeFunction = sequenceTimeFunction;
     }
 
-    public static Builder builder(Function<PoseCalculationContext, ResourceLocation> animationSequenceFunction) {
+    public static Builder builder(Function<PoseCalculationContext, Identifier> animationSequenceFunction) {
         return new Builder(animationSequenceFunction);
     }
 
-    public static Builder builder(ResourceLocation animationSequence) {
+    public static Builder builder(Identifier animationSequence) {
         return builder(context -> animationSequence);
     }
 
     @Override
     public @NotNull LocalSpacePose compute(PoseCalculationContext context) {
         TimeSpan time = this.sequenceTimeFunction.apply(context);
-        ResourceLocation sequence = this.animationSequenceFunction.apply(context);
+        Identifier sequence = this.animationSequenceFunction.apply(context);
         return AnimationSequence.samplePose(
                 context.jointSkeleton(),
                 sequence,
@@ -58,10 +58,10 @@ public class SequenceEvaluatorFunction implements PoseFunction<LocalSpacePose> {
     }
 
     public static class Builder {
-        private final Function<PoseCalculationContext, ResourceLocation> animationSequenceFunction;
+        private final Function<PoseCalculationContext, Identifier> animationSequenceFunction;
         private Function<PoseCalculationContext, TimeSpan> sequenceTimeFunction;
 
-        public Builder(Function<PoseCalculationContext, ResourceLocation> animationSequenceFunction) {
+        public Builder(Function<PoseCalculationContext, Identifier> animationSequenceFunction) {
             this.animationSequenceFunction = animationSequenceFunction;
             this.sequenceTimeFunction = context -> TimeSpan.ZERO;
         }

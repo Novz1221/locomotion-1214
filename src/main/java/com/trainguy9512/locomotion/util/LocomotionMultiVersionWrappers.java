@@ -9,7 +9,7 @@ public class LocomotionMultiVersionWrappers {
     }
 
     public static ItemUseAnimation getSpearUseAnimation() {
-        throw new RuntimeException("1.21.11 feature attempted to be used in older version");
+        return ItemUseAnimation.SPEAR;
     }
 
 }

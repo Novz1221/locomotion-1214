@@ -18,13 +18,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.MapRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.TypedDataComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -67,7 +67,7 @@ public class FirstPersonPlayerRenderer {
     }
 
     private PlayerModel getPlayerModel(AbstractClientPlayer player) {
-        PlayerRenderer playerRenderer = (PlayerRenderer) this.entityRenderDispatcher.getRenderer(player);
+        AvatarRenderer playerRenderer = (AvatarRenderer) this.entityRenderDispatcher.getRenderer(player);
         return playerRenderer.getModel();
     }
 
@@ -109,9 +109,9 @@ public class FirstPersonPlayerRenderer {
         poseStack.mulPose(Axis.ZP.rotationDegrees(180));
         this.renderArm(player, playerModel, side, poseStack, buffer, combinedLight);
 
-        ResourceLocation genericItemPoseIdentifier = dataContainer.getDriverValue(FirstPersonDrivers.getGenericItemPoseDriver(hand));
+        Identifier genericItemPoseIdentifier = dataContainer.getDriverValue(FirstPersonDrivers.getGenericItemPoseDriver(hand));
         FirstPersonGenericItems.GenericItemPoseDefinition genericItemPoseDefinition = FirstPersonGenericItems.getOrThrowFromIdentifier(genericItemPoseIdentifier);
-        ResourceLocation handPoseIdentifier = dataContainer.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
+        Identifier handPoseIdentifier = dataContainer.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
         FirstPersonHandPoses.HandPoseDefinition handPose = FirstPersonHandPoses.getOrThrowFromIdentifier(handPoseIdentifier);
         ItemRenderType itemRenderType = handPoseIdentifier == FirstPersonHandPoses.GENERIC_ITEM ? genericItemPoseDefinition.itemRenderType() : handPose.itemRenderType();
 
@@ -165,9 +165,9 @@ public class FirstPersonPlayerRenderer {
             int combinedLight
     ) {
         PlayerSkin skin = abstractClientPlayer.getSkin();
-        boolean isUsingSlimArms = skin.model() == PlayerSkin.Model.SLIM;
+        boolean isUsingSlimArms = skin.model() == PlayerModelType.SLIM;
         boolean leftArm = arm == HumanoidArm.LEFT;
-        ResourceLocation skinTextureLocation = skin.texture();
+        Identifier skinTextureLocation = skin.texture();
 
         // Getting the model parts
         ModelPart armModelPart = getArmPart(playerModel, arm);
@@ -226,9 +226,9 @@ public class FirstPersonPlayerRenderer {
         }
     }
 
-    private static final RenderType MAP_BACKGROUND = RenderType.text(ResourceLocation.withDefaultNamespace("textures/map/map_background.png"));
+    private static final RenderType MAP_BACKGROUND = RenderType.text(Identifier.withDefaultNamespace("textures/map/map_background.png"));
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(
-            ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png")
+            Identifier.withDefaultNamespace("textures/map/map_background_checkerboard.png")
     );
 
     private void renderMap(MultiBufferSource buffer, PoseStack poseStack, ItemStack itemStack, int combinedLight) {

@@ -51,7 +51,7 @@ public class StateDefinition {
     /**
      * Creates a new state builder with the properties of the provided state.
      *
-     * @param stateDefinition ResourceLocation for the new state.
+     * @param stateDefinition Identifier for the new state.
      */
     protected static Builder builder(StateDefinition stateDefinition) {
         return new Builder(stateDefinition);

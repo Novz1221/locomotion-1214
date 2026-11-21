@@ -6,7 +6,7 @@ import com.trainguy9512.locomotion.resource.FormatVersion;
 import com.trainguy9512.locomotion.animation.util.Interpolator;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Timeline;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -42,8 +42,8 @@ public class AnimationSequenceDeserializer implements JsonDeserializer<Animation
             }
         }
 
-        var potentialIdentifier = ResourceLocation.read(sequenceJsonObject.get(JOINT_SKELETON_KEY).getAsString()).result();
-        ResourceLocation jointSkeletonLocation;
+        var potentialIdentifier = Identifier.read(sequenceJsonObject.get(JOINT_SKELETON_KEY).getAsString()).result();
+        Identifier jointSkeletonLocation;
         if (potentialIdentifier.isPresent()) {
             jointSkeletonLocation = potentialIdentifier.get().withPath(string -> "skeletons/" + string + ".json");
         } else {

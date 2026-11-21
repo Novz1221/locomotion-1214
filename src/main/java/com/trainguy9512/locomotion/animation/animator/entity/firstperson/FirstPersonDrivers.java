@@ -5,7 +5,7 @@ import com.trainguy9512.locomotion.animation.animator.entity.firstperson.handpos
 import com.trainguy9512.locomotion.animation.animator.entity.firstperson.handpose.FirstPersonHandPoses;
 import com.trainguy9512.locomotion.animation.data.DriverGetter;
 import com.trainguy9512.locomotion.animation.driver.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -30,10 +30,10 @@ public class FirstPersonDrivers {
     public static final DriverKey<VariableDriver<ItemStack>> OFF_HAND_ITEM_COPY_REFERENCE = DriverKey.of("off_hand_item_copy_reference", () -> VariableDriver.ofConstant(() -> ItemStack.EMPTY));
     public static final DriverKey<VariableDriver<ItemStack>> RENDERED_MAIN_HAND_ITEM = DriverKey.of("rendered_main_hand_item", () -> VariableDriver.ofConstant(() -> ItemStack.EMPTY));
     public static final DriverKey<VariableDriver<ItemStack>> RENDERED_OFF_HAND_ITEM = DriverKey.of("rendered_off_hand_item", () -> VariableDriver.ofConstant(() -> ItemStack.EMPTY));
-    public static final DriverKey<VariableDriver<ResourceLocation>> MAIN_HAND_POSE = DriverKey.of("main_hand_pose", () -> VariableDriver.ofConstant(FirstPersonHandPoses::getEmptyMainHand));
-    public static final DriverKey<VariableDriver<ResourceLocation>> OFF_HAND_POSE = DriverKey.of("off_hand_pose", () -> VariableDriver.ofConstant(FirstPersonHandPoses::getEmptyOffHand));
-    public static final DriverKey<VariableDriver<ResourceLocation>> MAIN_HAND_GENERIC_ITEM_POSE = DriverKey.of("main_hand_generic_item_pose", () -> VariableDriver.ofConstant(FirstPersonGenericItems::getFallback));
-    public static final DriverKey<VariableDriver<ResourceLocation>> OFF_HAND_GENERIC_ITEM_POSE = DriverKey.of("off_hand_generic_item_pose", () -> VariableDriver.ofConstant(FirstPersonGenericItems::getFallback));
+    public static final DriverKey<VariableDriver<Identifier>> MAIN_HAND_POSE = DriverKey.of("main_hand_pose", () -> VariableDriver.ofConstant(FirstPersonHandPoses::getEmptyMainHand));
+    public static final DriverKey<VariableDriver<Identifier>> OFF_HAND_POSE = DriverKey.of("off_hand_pose", () -> VariableDriver.ofConstant(FirstPersonHandPoses::getEmptyOffHand));
+    public static final DriverKey<VariableDriver<Identifier>> MAIN_HAND_GENERIC_ITEM_POSE = DriverKey.of("main_hand_generic_item_pose", () -> VariableDriver.ofConstant(FirstPersonGenericItems::getFallback));
+    public static final DriverKey<VariableDriver<Identifier>> OFF_HAND_GENERIC_ITEM_POSE = DriverKey.of("off_hand_generic_item_pose", () -> VariableDriver.ofConstant(FirstPersonGenericItems::getFallback));
 
     public static final DriverKey<VariableDriver<String>> CURRENT_TWO_HANDED_OVERRIDE_STATE = DriverKey.of("current_two_handed_override_state", () -> VariableDriver.ofConstant(() -> FirstPersonTwoHandedActions.TWO_HANDED_ACTION_NORMAL_STATE));
 
@@ -87,10 +87,10 @@ public class FirstPersonDrivers {
     public static void updateRenderedItem(DriverGetter driverContainer, InteractionHand hand) {
         ItemStack newRenderedItem = driverContainer.getDriverValue(getItemDriver(hand)).copy();
         driverContainer.getDriver(getRenderedItemDriver(hand)).setValue(newRenderedItem);
-        ResourceLocation handPose = FirstPersonHandPoses.testForNextHandPose(newRenderedItem, hand);
+        Identifier handPose = FirstPersonHandPoses.testForNextHandPose(newRenderedItem, hand);
         driverContainer.getDriver(getHandPoseDriver(hand)).setValue(handPose);
         if (handPose == FirstPersonHandPoses.GENERIC_ITEM) {
-            ResourceLocation genericItemPose = FirstPersonGenericItems.getConfigurationFromItem(newRenderedItem);
+            Identifier genericItemPose = FirstPersonGenericItems.getConfigurationFromItem(newRenderedItem);
             driverContainer.getDriver(getGenericItemPoseDriver(hand)).setValue(genericItemPose);
         } else {
             driverContainer.getDriver(getGenericItemPoseDriver(hand)).setValue(FirstPersonGenericItems.getFallback());
@@ -103,14 +103,14 @@ public class FirstPersonDrivers {
         }
     }
 
-    public static DriverKey<VariableDriver<ResourceLocation>> getHandPoseDriver(InteractionHand hand) {
+    public static DriverKey<VariableDriver<Identifier>> getHandPoseDriver(InteractionHand hand) {
         return switch (hand) {
             case MAIN_HAND -> MAIN_HAND_POSE;
             case OFF_HAND -> OFF_HAND_POSE;
         };
     }
 
-    public static DriverKey<VariableDriver<ResourceLocation>> getGenericItemPoseDriver(InteractionHand hand) {
+    public static DriverKey<VariableDriver<Identifier>> getGenericItemPoseDriver(InteractionHand hand) {
         return switch (hand) {
             case MAIN_HAND -> MAIN_HAND_GENERIC_ITEM_POSE;
             case OFF_HAND -> OFF_HAND_GENERIC_ITEM_POSE;

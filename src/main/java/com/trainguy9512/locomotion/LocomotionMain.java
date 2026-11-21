@@ -4,7 +4,7 @@ import com.trainguy9512.locomotion.animation.animator.JointAnimatorRegistry;
 import com.trainguy9512.locomotion.animation.animator.entity.ThirdPersonPlayerJointAnimator;
 import com.trainguy9512.locomotion.animation.animator.entity.firstperson.FirstPersonJointAnimator;
 import com.trainguy9512.locomotion.config.LocomotionConfig;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +22,8 @@ public class LocomotionMain {
 
 	}
 
-	public static ResourceLocation makeIdentifier(String location) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, location);
+	public static Identifier makeIdentifier(String location) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, location);
 	}
 
 	/*

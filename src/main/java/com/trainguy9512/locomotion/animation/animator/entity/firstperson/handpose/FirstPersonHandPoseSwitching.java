@@ -15,7 +15,7 @@ import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.TypedDataComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
@@ -30,7 +30,7 @@ public class FirstPersonHandPoseSwitching {
 //            return FirstPersonHandPoses.getOrThrowFromIdentifier(FirstPersonHandPoses.EMPTY_OFF_HAND).getLowerStateIdentifier();
 //        }
 
-        ResourceLocation handPoseIdentifier = driverGetter.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
+        Identifier handPoseIdentifier = driverGetter.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
         FirstPersonHandPoses.HandPoseDefinition definition = FirstPersonHandPoses.getOrThrowFromIdentifier(handPoseIdentifier);
         return definition.stateIdentifier();
     }
@@ -45,7 +45,7 @@ public class FirstPersonHandPoseSwitching {
         stateMachineBuilder.resetsUponRelevant(true);
         StateAlias.Builder fromLowerAliasBuilder = StateAlias.builder(Set.of());
 
-        for (ResourceLocation handPoseIdentifier : FirstPersonHandPoses.getRegisteredHandPoseDefinitions()) {
+        for (Identifier handPoseIdentifier : FirstPersonHandPoses.getRegisteredHandPoseDefinitions()) {
             FirstPersonHandPoses.HandPoseDefinition handPose = FirstPersonHandPoses.getOrThrowFromIdentifier(handPoseIdentifier);
             defineStatesForHandPose(cachedPoseContainer, hand, stateMachineBuilder, fromLowerAliasBuilder, handPoseIdentifier, handPose);
         }
@@ -70,8 +70,8 @@ public class FirstPersonHandPoseSwitching {
         return SequenceEvaluatorFunction.builder(context -> getCurrentBasePoseForAdditive(context, hand)).build();
     }
 
-    public static ResourceLocation getCurrentBasePoseForAdditive(PoseCalculationContext context, InteractionHand hand) {
-        ResourceLocation currentHandPoseIdentifier = context.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
+    public static Identifier getCurrentBasePoseForAdditive(PoseCalculationContext context, InteractionHand hand) {
+        Identifier currentHandPoseIdentifier = context.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
         FirstPersonHandPoses.HandPoseDefinition definition = FirstPersonHandPoses.getOrThrowFromIdentifier(currentHandPoseIdentifier);
         return definition.currentBasePoseSupplier().apply(context, hand);
     }
@@ -80,17 +80,17 @@ public class FirstPersonHandPoseSwitching {
 
     private static boolean shouldChooseThisHandPose(
             StateTransitionContext context,
-            ResourceLocation handPoseIdentifier,
+            Identifier handPoseIdentifier,
             InteractionHand hand
     ) {
         ItemStack currentItemStack = context.getDriverValue(FirstPersonDrivers.getItemDriver(hand));
-        ResourceLocation handPoseFromCurrentItemStack = FirstPersonHandPoses.testForNextHandPose(currentItemStack, hand);
+        Identifier handPoseFromCurrentItemStack = FirstPersonHandPoses.testForNextHandPose(currentItemStack, hand);
         return handPoseIdentifier == handPoseFromCurrentItemStack;
     }
 
     private static boolean shouldTransitionToThisRaiseState(
             StateTransitionContext context,
-            ResourceLocation handPoseIdentifier,
+            Identifier handPoseIdentifier,
             InteractionHand hand
     ) {
         if (!StateTransition.MOST_RELEVANT_ANIMATION_PLAYER_IS_FINISHING.test(context)) {
@@ -101,7 +101,7 @@ public class FirstPersonHandPoseSwitching {
 
     private static boolean shouldSkipStraightToPoseStateForAttack(
             StateTransitionContext context,
-            ResourceLocation handPoseIdentifier,
+            Identifier handPoseIdentifier,
             InteractionHand hand
     ) {
         if (hand == InteractionHand.OFF_HAND) {
@@ -118,7 +118,7 @@ public class FirstPersonHandPoseSwitching {
             InteractionHand hand,
             StateMachineFunction.Builder stateMachineBuilder,
             StateAlias.Builder fromLowerAliasBuilder,
-            ResourceLocation handPoseIdentifier,
+            Identifier handPoseIdentifier,
             FirstPersonHandPoses.HandPoseDefinition handPose
     ) {
         String poseState = handPose.stateIdentifier();

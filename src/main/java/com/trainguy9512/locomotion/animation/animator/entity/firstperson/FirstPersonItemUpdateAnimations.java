@@ -9,7 +9,7 @@ import com.trainguy9512.locomotion.animation.pose.function.montage.MontageManage
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,19 +22,19 @@ import java.util.stream.Collectors;
 
 public class FirstPersonItemUpdateAnimations {
 
-    private static final Map<ResourceLocation, ItemUpdateAnimationRule> ITEM_UPDATE_ANIMATION_RULES_BY_IDENTIFIER = Maps.newHashMap();
+    private static final Map<Identifier, ItemUpdateAnimationRule> ITEM_UPDATE_ANIMATION_RULES_BY_IDENTIFIER = Maps.newHashMap();
 
-    public static final ResourceLocation CROSSBOW_FIRE = register(LocomotionMain.makeIdentifier("crossbow_fire"), ItemUpdateAnimationRule.of(
+    public static final Identifier CROSSBOW_FIRE = register(LocomotionMain.makeIdentifier("crossbow_fire"), ItemUpdateAnimationRule.of(
             FirstPersonMontages::getCrossbowFireMontage,
             FirstPersonItemUpdateAnimations::shouldPlayCrossbowFire,
             0
     ));
-    public static final ResourceLocation BUCKET_COLLECT = register(LocomotionMain.makeIdentifier("bucket_collect"), ItemUpdateAnimationRule.of(
+    public static final Identifier BUCKET_COLLECT = register(LocomotionMain.makeIdentifier("bucket_collect"), ItemUpdateAnimationRule.of(
             FirstPersonMontages::getBucketCollectMontage,
             FirstPersonItemUpdateAnimations::shouldPlayBucketCollect,
             0
     ));
-    public static final ResourceLocation BUCKET_EMPTY = register(LocomotionMain.makeIdentifier("bucket_empty"), ItemUpdateAnimationRule.of(
+    public static final Identifier BUCKET_EMPTY = register(LocomotionMain.makeIdentifier("bucket_empty"), ItemUpdateAnimationRule.of(
             FirstPersonMontages::getBucketEmptyMontage,
             FirstPersonItemUpdateAnimations::shouldPlayBucketEmpty,
             0
@@ -74,7 +74,7 @@ public class FirstPersonItemUpdateAnimations {
         return currentItemIsEmptyBucket && previousItemIsCollectedBucket;
     }
 
-    public static ResourceLocation register(ResourceLocation identifier, ItemUpdateAnimationRule itemUpdateAnimationRule) {
+    public static Identifier register(Identifier identifier, ItemUpdateAnimationRule itemUpdateAnimationRule) {
         ITEM_UPDATE_ANIMATION_RULES_BY_IDENTIFIER.put(identifier, itemUpdateAnimationRule);
         return identifier;
     }
@@ -122,7 +122,7 @@ public class FirstPersonItemUpdateAnimations {
                 previousItem
         );
 
-        Map<ResourceLocation, ItemUpdateAnimationRule> sortedItemUpdateAnimationRules = ITEM_UPDATE_ANIMATION_RULES_BY_IDENTIFIER.entrySet()
+        Map<Identifier, ItemUpdateAnimationRule> sortedItemUpdateAnimationRules = ITEM_UPDATE_ANIMATION_RULES_BY_IDENTIFIER.entrySet()
                 .stream()
                 .sorted(Comparator.comparingInt(entry -> -entry.getValue().evaluationPriority()))
                 .collect(Collectors.toMap(
@@ -132,7 +132,7 @@ public class FirstPersonItemUpdateAnimations {
                         LinkedHashMap::new
                 ));
 
-        for (ResourceLocation ruleIdentifier : sortedItemUpdateAnimationRules.keySet()) {
+        for (Identifier ruleIdentifier : sortedItemUpdateAnimationRules.keySet()) {
             ItemUpdateAnimationRule rule = sortedItemUpdateAnimationRules.get(ruleIdentifier);
             if (rule.shouldPlayAnimation.test(context)) {
                 LocomotionMain.DEBUG_LOGGER.info("Playing item update animation \"{}\"", ruleIdentifier);
@@ -141,8 +141,8 @@ public class FirstPersonItemUpdateAnimations {
                     montageManager.interruptMontagesInSlot(slot, Transition.builder(TimeSpan.ofSeconds(0.2f)).build());
                 }
                 montageManager.playMontage(rule.montageProvider.apply(hand));
-                ResourceLocation renderedItemHandPose = FirstPersonHandPoses.testForNextHandPose(renderedItem, hand);
-                ResourceLocation currentItemHandPose = FirstPersonHandPoses.testForNextHandPose(actualItem, hand);
+                Identifier renderedItemHandPose = FirstPersonHandPoses.testForNextHandPose(renderedItem, hand);
+                Identifier currentItemHandPose = FirstPersonHandPoses.testForNextHandPose(actualItem, hand);
                 if (currentItemHandPose == renderedItemHandPose) {
                     FirstPersonDrivers.updateRenderedItem(driverContainer, hand);
                 }

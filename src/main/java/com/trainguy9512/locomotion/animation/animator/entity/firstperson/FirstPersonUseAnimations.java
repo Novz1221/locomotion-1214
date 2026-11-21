@@ -10,7 +10,7 @@ import com.trainguy9512.locomotion.animation.driver.TriggerDriver;
 import com.trainguy9512.locomotion.animation.pose.function.montage.MontageConfiguration;
 import com.trainguy9512.locomotion.animation.pose.function.montage.MontageManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,34 +34,34 @@ import java.util.stream.Collectors;
 
 public class FirstPersonUseAnimations {
 
-    private static final Map<ResourceLocation, UseAnimationRule> USE_ANIMATION_RULES_BY_LOCATION = Maps.newHashMap();
+    private static final Map<Identifier, UseAnimationRule> USE_ANIMATION_RULES_BY_LOCATION = Maps.newHashMap();
 
-    public static final ResourceLocation DEFAULT = register(LocomotionMain.makeIdentifier("default"), UseAnimationRule.of(
+    public static final Identifier DEFAULT = register(LocomotionMain.makeIdentifier("default"), UseAnimationRule.of(
             FirstPersonMontages::getUseAnimationMontage,
             UseAnimationConditionContext::swingFromClient,
             0
     ));
-    public static final ResourceLocation PLACE_BLOCK = register(LocomotionMain.makeIdentifier("place_block"), UseAnimationRule.of(
+    public static final Identifier PLACE_BLOCK = register(LocomotionMain.makeIdentifier("place_block"), UseAnimationRule.of(
             FirstPersonMontages::getPlaceBlockAnimationMontage,
             FirstPersonUseAnimations::shouldPlayPlaceBlock,
             5
     ));
-    public static final ResourceLocation AXE_SCRAPE = register(LocomotionMain.makeIdentifier("axe_scrape"), UseAnimationRule.of(
+    public static final Identifier AXE_SCRAPE = register(LocomotionMain.makeIdentifier("axe_scrape"), UseAnimationRule.of(
             FirstPersonMontages::getAxeScrapeMontage,
             FirstPersonUseAnimations::shouldPlayAxeScrape,
             10
     ));
-    public static final ResourceLocation HOE_TILL = register(LocomotionMain.makeIdentifier("hoe_till"), UseAnimationRule.of(
+    public static final Identifier HOE_TILL = register(LocomotionMain.makeIdentifier("hoe_till"), UseAnimationRule.of(
             FirstPersonMontages::getHoeTillMontage,
             FirstPersonUseAnimations::shouldPlayHoeTill,
             20
     ));
-    public static final ResourceLocation SHOVEL_FLATTEN = register(LocomotionMain.makeIdentifier("shovel_flatten"), UseAnimationRule.of(
+    public static final Identifier SHOVEL_FLATTEN = register(LocomotionMain.makeIdentifier("shovel_flatten"), UseAnimationRule.of(
             FirstPersonMontages::getShovelFlattenMontage,
             FirstPersonUseAnimations::shouldPlayShovelFlatten,
             30
     ));
-    public static final ResourceLocation SHEARS_USE = register(LocomotionMain.makeIdentifier("shears_use"), UseAnimationRule.of(
+    public static final Identifier SHEARS_USE = register(LocomotionMain.makeIdentifier("shears_use"), UseAnimationRule.of(
             FirstPersonMontages::getShearsUseMontage,
             FirstPersonUseAnimations::shouldPlayShearsUse,
             40
@@ -138,7 +138,7 @@ public class FirstPersonUseAnimations {
      * @param identifier            Name to give the use animation
      * @param useAnimationRule      Use animation rule
      */
-    public static ResourceLocation register(ResourceLocation identifier, UseAnimationRule useAnimationRule) {
+    public static Identifier register(Identifier identifier, UseAnimationRule useAnimationRule) {
         USE_ANIMATION_RULES_BY_LOCATION.put(identifier, useAnimationRule);
         return identifier;
     }
@@ -222,7 +222,7 @@ public class FirstPersonUseAnimations {
                 lastSwingFromClient
         );
 
-        Map<ResourceLocation, UseAnimationRule> sortedUseAnimationRules = USE_ANIMATION_RULES_BY_LOCATION.entrySet()
+        Map<Identifier, UseAnimationRule> sortedUseAnimationRules = USE_ANIMATION_RULES_BY_LOCATION.entrySet()
                 .stream()
                 .sorted(Comparator.comparingInt(entry -> -entry.getValue().evaluationPriority()))
                 .collect(Collectors.toMap(
@@ -232,13 +232,13 @@ public class FirstPersonUseAnimations {
                         LinkedHashMap::new
                 ));
 
-        for (ResourceLocation ruleIdentifier : sortedUseAnimationRules.keySet()) {
+        for (Identifier ruleIdentifier : sortedUseAnimationRules.keySet()) {
             UseAnimationRule rule = sortedUseAnimationRules.get(ruleIdentifier);
             if (rule.shouldChooseUseAnimation.test(context)) {
                 LocomotionMain.DEBUG_LOGGER.info("Playing use animation \"{}\"", ruleIdentifier);
                 montageManager.playMontage(rule.montageProvider.apply(hand));
-                ResourceLocation renderedItemHandPose = FirstPersonHandPoses.testForNextHandPose(renderedItem, hand);
-                ResourceLocation currentItemHandPose = FirstPersonHandPoses.testForNextHandPose(actualItem, hand);
+                Identifier renderedItemHandPose = FirstPersonHandPoses.testForNextHandPose(renderedItem, hand);
+                Identifier currentItemHandPose = FirstPersonHandPoses.testForNextHandPose(actualItem, hand);
                 if (currentItemHandPose == renderedItemHandPose) {
                     FirstPersonDrivers.updateRenderedItem(driverContainer, hand);
                 }

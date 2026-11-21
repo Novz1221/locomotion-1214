@@ -2,7 +2,7 @@
   "required": false,
   "minVersion": "0.8",
   "package": "com.trainguy9512.locomotion.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [],
   "client": [
     "game.MixinMinecraft",

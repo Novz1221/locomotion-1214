@@ -8,7 +8,7 @@ import com.trainguy9512.locomotion.animation.pose.function.montage.MontageManage
 import com.trainguy9512.locomotion.animation.util.Easing;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 
 
@@ -27,16 +27,16 @@ public class FirstPersonMontages {
         return hand == InteractionHand.MAIN_HAND ? MAIN_HAND_ATTACK_SLOT : OFF_HAND_ATTACK_SLOT;
     }
 
-    public static ResourceLocation getCurrentHandPose(DriverGetter driverContainer, InteractionHand hand) {
-        ResourceLocation handPose = driverContainer.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
+    public static Identifier getCurrentHandPose(DriverGetter driverContainer, InteractionHand hand) {
+        Identifier handPose = driverContainer.getDriverValue(FirstPersonDrivers.getHandPoseDriver(hand));
         return FirstPersonHandPoses.getOrThrowFromIdentifier(handPose).currentBasePoseSupplier().apply(driverContainer, hand);
     }
 
-    public static ResourceLocation getCurrentMainHandPose(DriverGetter driverContainer) {
+    public static Identifier getCurrentMainHandPose(DriverGetter driverContainer) {
         return getCurrentHandPose(driverContainer, InteractionHand.MAIN_HAND);
     }
 
-    public static ResourceLocation getCurrentOffHandPose(DriverGetter driverContainer) {
+    public static Identifier getCurrentOffHandPose(DriverGetter driverContainer) {
         return getCurrentHandPose(driverContainer, InteractionHand.OFF_HAND);
     }
 

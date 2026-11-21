@@ -10,7 +10,7 @@ import com.trainguy9512.locomotion.animation.pose.function.cache.CachedPoseConta
 import com.trainguy9512.locomotion.render.ItemRenderType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -22,52 +22,52 @@ import java.util.stream.Collectors;
 
 public class FirstPersonGenericItems {
 
-    private static final Map<ResourceLocation, GenericItemPoseDefinition> GENERIC_ITEM_POSES_BY_IDENTIFIER = new HashMap<>();
+    private static final Map<Identifier, GenericItemPoseDefinition> GENERIC_ITEM_POSES_BY_IDENTIFIER = new HashMap<>();
 
-    public static ResourceLocation register(ResourceLocation identifier, GenericItemPoseDefinition genericItemPoseDefinition) {
+    public static Identifier register(Identifier identifier, GenericItemPoseDefinition genericItemPoseDefinition) {
         GENERIC_ITEM_POSES_BY_IDENTIFIER.put(identifier, genericItemPoseDefinition);
         return identifier;
     }
 
-//    public static final ResourceLocation GENERIC_2D_ITEM = register(LocomotionMain.makeIdentifier("generic_2d_item"), GenericItemPoseDefinition.builder(
+//    public static final Identifier GENERIC_2D_ITEM = register(LocomotionMain.makeIdentifier("generic_2d_item"), GenericItemPoseDefinition.builder(
 //            FirstPersonAnimationSequences.HAND_GENERIC_ITEM_2D_ITEM_POSE,
 //            itemStack -> true,
 //            0)
 //            .build());
-    public static final ResourceLocation FIXED_ITEM = register(LocomotionMain.makeIdentifier("fixed_item"), GenericItemPoseDefinition.builder(
+    public static final Identifier FIXED_ITEM = register(LocomotionMain.makeIdentifier("fixed_item"), GenericItemPoseDefinition.builder(
                     FirstPersonAnimationSequences.HAND_GENERIC_ITEM_FIXED_ITEM_POSE,
                     itemStack -> true,
                     0)
             .setItemRenderType(ItemRenderType.ON_SHELF)
             .build());
-    public static final ResourceLocation ROD = register(LocomotionMain.makeIdentifier("rod"), GenericItemPoseDefinition.builder(
+    public static final Identifier ROD = register(LocomotionMain.makeIdentifier("rod"), GenericItemPoseDefinition.builder(
             FirstPersonAnimationSequences.HAND_GENERIC_ITEM_ROD_POSE,
             FirstPersonGenericItems::isRodItem,
             20)
             .build());
-    public static final ResourceLocation SHEARS = register(LocomotionMain.makeIdentifier("shears"), GenericItemPoseDefinition.builder(
+    public static final Identifier SHEARS = register(LocomotionMain.makeIdentifier("shears"), GenericItemPoseDefinition.builder(
             FirstPersonAnimationSequences.HAND_GENERIC_ITEM_SHEARS_POSE,
             FirstPersonGenericItems::isShearsItem,
             60)
             .build());
-    public static final ResourceLocation FISHING_ROD = register(LocomotionMain.makeIdentifier("fishing_rod"), GenericItemPoseDefinition.builder(
+    public static final Identifier FISHING_ROD = register(LocomotionMain.makeIdentifier("fishing_rod"), GenericItemPoseDefinition.builder(
             FirstPersonAnimationSequences.HAND_GENERIC_ITEM_FISHING_ROD_POSE,
             FirstPersonGenericItems::isFishingRodItem,
             70)
             .build());
-    public static final ResourceLocation ARROW = register(LocomotionMain.makeIdentifier("arrow"), GenericItemPoseDefinition.builder(
+    public static final Identifier ARROW = register(LocomotionMain.makeIdentifier("arrow"), GenericItemPoseDefinition.builder(
             FirstPersonAnimationSequences.HAND_GENERIC_ITEM_ARROW_POSE,
             FirstPersonGenericItems::isArrowItem,
             80)
             .setItemRenderType(ItemRenderType.MIRRORED_THIRD_PERSON_ITEM)
             .build());
-//    public static final ResourceLocation BLOCK = register(LocomotionMain.makeIdentifier("block"), GenericItemPoseDefinition.builder(
+//    public static final Identifier BLOCK = register(LocomotionMain.makeIdentifier("block"), GenericItemPoseDefinition.builder(
 //                    FirstPersonAnimationSequences.HAND_GENERIC_ITEM_BLOCK_POSE,
 //                    FirstPersonGenericItems::isBlockItem,
 //                    80)
 //            .setItemRenderType(ItemRenderType.BLOCK_STATE)
 //            .build());
-//    public static final ResourceLocation DOOR = register(LocomotionMain.makeIdentifier("door"), GenericItemPoseDefinition.builder(
+//    public static final Identifier DOOR = register(LocomotionMain.makeIdentifier("door"), GenericItemPoseDefinition.builder(
 //                    FirstPersonAnimationSequences.HAND_GENERIC_ITEM_DOOR_BLOCK_POSE,
 //                    FirstPersonGenericItems::isDoorItem,
 //                    90)
@@ -133,8 +133,8 @@ public class FirstPersonGenericItems {
                 return true;
             }
         }
-        ResourceLocation identifier = BuiltInRegistries.ITEM.getKey(itemStack.getItem());
-        ResourceLocation modelLocation = ResourceLocation.fromNamespaceAndPath(identifier.getNamespace(), "models/item/" + identifier.getPath() + ".json");
+        Identifier identifier = BuiltInRegistries.ITEM.getKey(itemStack.getItem());
+        Identifier modelLocation = Identifier.fromNamespaceAndPath(identifier.getNamespace(), "models/item/" + identifier.getPath() + ".json");
         return Minecraft.getInstance().getResourceManager().getResource(modelLocation).isEmpty();
     }
 
@@ -142,21 +142,21 @@ public class FirstPersonGenericItems {
         return itemStack.is(ItemTags.DOORS);
     }
 
-    public static ResourceLocation getCurrentBasePose(DriverGetter dataContainer, InteractionHand hand) {
-        ResourceLocation currentGenericItemPose = dataContainer.getDriverValue(FirstPersonDrivers.getGenericItemPoseDriver(hand));
+    public static Identifier getCurrentBasePose(DriverGetter dataContainer, InteractionHand hand) {
+        Identifier currentGenericItemPose = dataContainer.getDriverValue(FirstPersonDrivers.getGenericItemPoseDriver(hand));
         GenericItemPoseDefinition definition = FirstPersonGenericItems.getOrThrowFromIdentifier(currentGenericItemPose);
         return definition.basePoseSequence();
     }
 
     public record GenericItemPoseDefinition(
-            ResourceLocation basePoseSequence,
+            Identifier basePoseSequence,
             Predicate<ItemStack> choosePoseIfTrue,
             int evaluationPriority,
             ItemRenderType itemRenderType
     ) {
 
         public static Builder builder(
-                ResourceLocation basePoseAnimationSequence,
+                Identifier basePoseAnimationSequence,
                 Predicate<ItemStack> choosePoseIfTrue,
                 int evaluationPriority
         ) {
@@ -165,13 +165,13 @@ public class FirstPersonGenericItems {
 
         public static class Builder {
 
-            private final ResourceLocation basePoseAnimationSequence;
+            private final Identifier basePoseAnimationSequence;
             private final int evaluationPriority;
             private final Predicate<ItemStack> choosePoseIfTrue;
             private ItemRenderType itemRenderType;
 
             private Builder(
-                    ResourceLocation basePoseAnimationSequence,
+                    Identifier basePoseAnimationSequence,
                     Predicate<ItemStack> choosePoseIfTrue,
                     int evaluationPriority
             ) {
@@ -197,20 +197,20 @@ public class FirstPersonGenericItems {
         }
     }
 
-    public static ResourceLocation getFallback() {
+    public static Identifier getFallback() {
         return FIXED_ITEM;
     }
 
-    public static GenericItemPoseDefinition getOrThrowFromIdentifier(ResourceLocation identifier) {
+    public static GenericItemPoseDefinition getOrThrowFromIdentifier(Identifier identifier) {
         GenericItemPoseDefinition definition = GENERIC_ITEM_POSES_BY_IDENTIFIER.get(identifier);
         if (definition == null) {
-            throw new RuntimeException("ResourceLocation " + identifier + " is not a registered generic item pose.");
+            throw new RuntimeException("Identifier " + identifier + " is not a registered generic item pose.");
         }
         return definition;
     }
 
-    public static ResourceLocation getConfigurationFromItem(ItemStack itemStack) {
-        Map<ResourceLocation, GenericItemPoseDefinition> genericItemPosesSortedByPriority = GENERIC_ITEM_POSES_BY_IDENTIFIER.entrySet()
+    public static Identifier getConfigurationFromItem(ItemStack itemStack) {
+        Map<Identifier, GenericItemPoseDefinition> genericItemPosesSortedByPriority = GENERIC_ITEM_POSES_BY_IDENTIFIER.entrySet()
                 .stream()
                 .sorted(Comparator.comparingInt(entry -> -entry.getValue().evaluationPriority()))
                 .collect(Collectors.toMap(
@@ -219,7 +219,7 @@ public class FirstPersonGenericItems {
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new
                 ));
-        for (ResourceLocation key : genericItemPosesSortedByPriority.keySet()) {
+        for (Identifier key : genericItemPosesSortedByPriority.keySet()) {
             GenericItemPoseDefinition definition = GENERIC_ITEM_POSES_BY_IDENTIFIER.get(key);
             if (definition.choosePoseIfTrue().test(itemStack)) {
                 return key;
@@ -229,9 +229,9 @@ public class FirstPersonGenericItems {
         return getFallback();
     }
 
-//    public static ResourceLocation getGenericItemPoseSequence(PoseFunction.FunctionInterpolationContext context, InteractionHand hand) {
-//        DriverKey<VariableDriver<ResourceLocation>> driver = FirstPersonDrivers.getGenericItemPoseDriver(hand);
-//        ResourceLocation genericItemPoseIdentifier = context.driverContainer().getInterpolatedDriverValue(driver, context.partialTicks());
+//    public static Identifier getGenericItemPoseSequence(PoseFunction.FunctionInterpolationContext context, InteractionHand hand) {
+//        DriverKey<VariableDriver<Identifier>> driver = FirstPersonDrivers.getGenericItemPoseDriver(hand);
+//        Identifier genericItemPoseIdentifier = context.driverContainer().getInterpolatedDriverValue(driver, context.partialTicks());
 //        GenericItemPoseDefinition definition = getOrThrowFromIdentifier(genericItemPoseIdentifier);
 //        return definition.basePoseSequence;
 //    }

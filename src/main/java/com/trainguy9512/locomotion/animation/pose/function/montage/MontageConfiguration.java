@@ -7,7 +7,7 @@ import com.trainguy9512.locomotion.animation.joint.skeleton.BlendMask;
 import com.trainguy9512.locomotion.animation.pose.function.SequenceReferencePoint;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.function.Function;
 /**
  * Configuration for a triggerable animation, otherwise known as a Montage in Unreal Engine.
  *
- * @param identifier                        ResourceLocation for this montage configuration.
+ * @param identifier                        Identifier for this montage configuration.
  * @param slots                             List of slots that the montage will be reflected on during pose evaluation.
  * @param animationSequence                 Animation sequence to play
  * @param playRateFunction                  Function that provides the play rate every time a montage of this configuration is fired.
@@ -40,7 +40,7 @@ import java.util.function.Function;
 public record MontageConfiguration(
         String identifier,
         List<String> slots,
-        ResourceLocation animationSequence,
+        Identifier animationSequence,
         Function<DriverGetter, Float> playRateFunction,
         Map<String, Consumer<PoseTickEvaluationContext>> timeMarkerBindings,
         @Nullable BlendMask blendMask,
@@ -50,13 +50,13 @@ public record MontageConfiguration(
         float transitionOutCrossfadeWeight,
         TimeSpan cooldownDuration,
         boolean isAdditive,
-        Function<DriverGetter, ResourceLocation> additiveBasePoseProvider,
+        Function<DriverGetter, Identifier> additiveBasePoseProvider,
         SequenceReferencePoint additiveReferencePosePoint,
         float blendIntensity,
         boolean isMirrored
 ) {
 
-    public static Builder builder(String identifier, ResourceLocation animationSequence) {
+    public static Builder builder(String identifier, Identifier animationSequence) {
         return new Builder(identifier, animationSequence);
     }
 
@@ -66,7 +66,7 @@ public record MontageConfiguration(
      * @param animationSequence     Animation sequence to play as the montage.
      * @return New montage configuration builder.
      */
-    public Builder makeBuilderCopy(String identifier, ResourceLocation animationSequence) {
+    public Builder makeBuilderCopy(String identifier, Identifier animationSequence) {
         Builder builder = MontageConfiguration.builder(identifier, animationSequence)
                 .setPlayRate(this.playRateFunction)
                 .setBlendMask(this.blendMask)
@@ -90,7 +90,7 @@ public record MontageConfiguration(
     public static class Builder {
 
         private final String identifier;
-        private final ResourceLocation animationSequence;
+        private final Identifier animationSequence;
         private final List<String> slots;
         private Function<DriverGetter, Float> playRateFunction;
         private Map<String, Consumer<PoseTickEvaluationContext>> timeMarkerBindings;
@@ -101,13 +101,13 @@ public record MontageConfiguration(
         private float transitionOutCrossfadeWeight;
         private TimeSpan cooldownDuration;
         private boolean isAdditive;
-        private Function<DriverGetter, ResourceLocation> additiveBasePoseProvider;
+        private Function<DriverGetter, Identifier> additiveBasePoseProvider;
         private SequenceReferencePoint additiveReferencePosePoint;
         private float blendIntensity;
         private boolean isMirrored;
 
 
-        private Builder(String identifier, ResourceLocation animationSequence) {
+        private Builder(String identifier, Identifier animationSequence) {
             this.identifier = identifier;
             this.animationSequence = animationSequence;
             this.slots = new ArrayList<>();
@@ -243,7 +243,7 @@ public record MontageConfiguration(
          * @param additiveBasePoseProvider          Base pose provider, retrieved every time a montage of this configuration is fired.
          */
         public Builder makeAdditive(
-                Function<DriverGetter, ResourceLocation> additiveBasePoseProvider,
+                Function<DriverGetter, Identifier> additiveBasePoseProvider,
                 SequenceReferencePoint additiveReferencePosePoint
         ) {
             this.isAdditive = true;

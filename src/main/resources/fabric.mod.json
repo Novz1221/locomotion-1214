@@ -3,7 +3,7 @@
   "id": "locomotion",
   "version": "${version}",
   "name": "Locomotion",
-  "description": "An animation overhaul mod (unofficial backport to Minecraft 1.21.4)",
+  "description": "An animation overhaul mod (unofficial port to Minecraft 26.3)",
   "authors": [ "James Pelter AKA Trainguy9512" ],
   "contact": {
     "homepage": "https://github.com/Trainguy9512/locomotion/",
@@ -18,9 +18,9 @@
   },
   "mixins": [ "locomotion.mixins.json" ],
   "depends": {
-    "fabricloader": ">=0.16.10",
+    "fabricloader": ">=0.19.5",
     "fabric-api": "*",
-    "minecraft": "1.21.4",
-    "java": ">=21"
+    "minecraft": "26.3",
+    "java": ">=25"
   }
 }

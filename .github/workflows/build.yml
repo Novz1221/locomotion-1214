@@ -8,7 +8,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 25
       - uses: gradle/actions/setup-gradle@v4
       - name: Gradle build
         run: |
@@ -18,5 +18,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: locomotion-1.21.4
+          name: locomotion-26.3
           path: build/libs/*.jar

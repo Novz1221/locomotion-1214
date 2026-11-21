@@ -16,7 +16,7 @@ import com.trainguy9512.locomotion.animation.pose.function.statemachine.*;
 import com.trainguy9512.locomotion.animation.util.Easing;
 import com.trainguy9512.locomotion.animation.util.TimeSpan;
 import com.trainguy9512.locomotion.animation.util.Transition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
@@ -731,7 +731,7 @@ public class FirstPersonMovement {
     }
 
     public static PoseFunction<LocalSpacePose> constructWithUnderwaterStateMachine(PoseFunction<LocalSpacePose> inputPose) {
-        ResourceLocation groundMovementSwimmingSequence = FirstPersonAnimationSequences.GROUND_MOVEMENT_SWIMMING_IDLE;
+        Identifier groundMovementSwimmingSequence = FirstPersonAnimationSequences.GROUND_MOVEMENT_SWIMMING_IDLE;
         PoseFunction<LocalSpacePose> treadingUnderwaterPoseFunction = BlendedSequencePlayerFunction.builder(FirstPersonDrivers.VERTICAL_MOVEMENT_SPEED)
                 .setResetStartTimeOffset(TimeSpan.of30FramesPerSecond(5))
                 .addEntry(-0.05f, groundMovementSwimmingSequence, 0.5f)

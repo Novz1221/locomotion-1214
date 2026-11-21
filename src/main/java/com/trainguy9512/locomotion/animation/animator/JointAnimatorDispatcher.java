@@ -16,7 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,8 +34,8 @@ public class JointAnimatorDispatcher {
     private AnimationDataContainer firstPersonPlayerDataContainer;
     private ModelPartSpacePose interpolatedFirstPersonPlayerPose;
 
-    private static DriverKey<VariableDriver<ResourceLocation>> BLOCK_ENTITY_TYPE_DRIVER = DriverKey.of("block_entity_type", () -> VariableDriver.ofConstant(() -> ResourceLocation.withDefaultNamespace("none")));
-    private static DriverKey<VariableDriver<ResourceLocation>> ENTITY_TYPE_DRIVER = DriverKey.of("entity_type", () -> VariableDriver.ofConstant(() -> ResourceLocation.withDefaultNamespace("none")));
+    private static DriverKey<VariableDriver<Identifier>> BLOCK_ENTITY_TYPE_DRIVER = DriverKey.of("block_entity_type", () -> VariableDriver.ofConstant(() -> Identifier.withDefaultNamespace("none")));
+    private static DriverKey<VariableDriver<Identifier>> ENTITY_TYPE_DRIVER = DriverKey.of("entity_type", () -> VariableDriver.ofConstant(() -> Identifier.withDefaultNamespace("none")));
 
     public JointAnimatorDispatcher() {
         this.entityAnimationDataContainerStorage = Maps.newHashMap();
@@ -142,8 +142,8 @@ public class JointAnimatorDispatcher {
         return Optional.empty();
     }
 
-    public Map<BlockPos, ResourceLocation> getCurrentlyEvaluatingBlockEntityJointAnimators() {
-        Map<BlockPos, ResourceLocation> map = Maps.newHashMap();
+    public Map<BlockPos, Identifier> getCurrentlyEvaluatingBlockEntityJointAnimators() {
+        Map<BlockPos, Identifier> map = Maps.newHashMap();
         this.blockEntityAnimationDataContainerStorage.forEach((packedBlockPos, dataContainer) -> {
             map.put(BlockPos.of(packedBlockPos), dataContainer.getDriverValue(BLOCK_ENTITY_TYPE_DRIVER));
         });
@@ -157,7 +157,7 @@ public class JointAnimatorDispatcher {
     }
 
     private static boolean blockEntityIsEnabledInConfig(BlockEntityType<?> type) {
-        ResourceLocation typeIdentifier = BlockEntityType.getKey(type);
+        Identifier typeIdentifier = BlockEntityType.getKey(type);
         assert typeIdentifier != null;
         return LocomotionMain.CONFIG.data().blockEntities.enabledBlockEntities.getOrDefault(typeIdentifier.toString(), true);
     }
