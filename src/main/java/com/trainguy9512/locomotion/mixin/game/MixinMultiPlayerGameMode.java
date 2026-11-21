@@ -136,7 +136,7 @@ public class MixinMultiPlayerGameMode {
             method = "interact",
             at = @At("RETURN")
     )
-    public void triggerInteractAnimation(Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    public void triggerInteractAnimation(Player player, Entity target, EntityHitResult ray, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (cir.getReturnValue() instanceof InteractionResult.Success success) {
             FirstPersonUseAnimations.triggerUseAnimation(
                     hand,
